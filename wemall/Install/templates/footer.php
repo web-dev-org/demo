@@ -1,0 +1,1 @@
+<div class="footer">  2013 - 2014 <a href="http://www.inuoer.com" target="_blank">微信商城管理系统，vixzone开发。</a>  </div>

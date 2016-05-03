@@ -1,0 +1,147 @@
+<div class="sidebar" id="sidebar">
+	<script type="text/javascript">
+		try{ace.settings.check('sidebar' , 'fixed')}catch(e){}
+	</script>
+
+	<ul class="nav nav-list">
+		<li class="active">
+			<a href="">
+				<i class="icon-home"></i>
+				<span class="menu-text"> 后台欢迎页 </span>
+			</a>
+		</li>
+		<if condition="$set eq '1'">
+			<li onclick="clickset('set')">
+				<a href="javascript:void(0)">
+					<i class="icon-pencil"></i>
+					<span class="menu-text"> 商城管理 </span>
+				</a>
+			</li>		
+		</if>
+
+		<if condition="$menu eq '1'">
+			<li  onclick="clickset('menu')">
+				<a href="javascript:void(0)">
+					<i class="icon-list"></i>
+					<span class="menu-text"> 分类管理 </span>
+				</a>
+			</li>
+		</if>
+
+		<if condition="$city eq '1'">
+			<li  onclick="clickset('city')">
+				<a href="javascript:void(0)">
+					<i class="icon-picture"></i>
+					<span class="menu-text"> 地域管理 </span>
+				</a>
+			</li>
+		</if>
+		
+		<if condition="$cityPercent eq '1'">
+			<li  onclick="clickset('citypercent')">
+				<a href="javascript:void(0)">
+					<i class="icon-facetime-video"></i>
+					<span class="menu-text"> 地域百分比管理 </span>
+				</a>
+			</li>
+		</if>
+
+		<if condition="$product eq '1'">
+			<li onclick="clickset('product')">
+				<a href="javascript:void(0)">
+					<i class="icon-gift"></i>
+					<span class="menu-text"> 商品管理 </span>
+				</a>
+			</li>
+		</if>
+		
+		<if condition="$price eq '1'">
+			<li onclick="clickset('price')">
+				<a href="javascript:void(0)">
+					<i class="icon-adjust"></i>
+					<span class="menu-text"> 价格管理 </span>
+				</a>
+			</li>
+		</if>
+		
+		<if condition="$confirm eq '1'">
+			<li onclick="clickset('confirm')">
+				<a href="javascript:void(0)">
+					<i class="icon-tint"></i>
+					<span class="menu-text"> 发布管理 </span>
+				</a>
+			</li>
+		</if>
+		
+		<if condition="$order eq '1'">
+			<li onclick="clickset('order')">
+				<a href="javascript:void(0)">
+					<i class="icon-calendar"></i>
+					<span class="menu-text"> 订单管理 </span>
+				</a>
+			</li>
+		</if>
+
+		<if condition="$count eq '1'">
+			<li onclick="clickset('count')">
+				<a href="javascript:void(0)">
+					<i class="icon-cloud"></i>
+					<span class="menu-text"> 数据统计 </span>
+				</a>
+			</li>
+		</if>
+
+		<if condition="$member eq '1'">
+			<li onclick="clickset('mem')">
+				<a href="javascript:void(0)">
+					<i class="icon-group"></i>
+					<span class="menu-text"> 用户管理 </span>
+				</a>
+			</li>
+		</if>
+		<if condition="$active eq '1'">
+			<li onclick="clickset('active')">
+				<a href="javascript:void(0)">
+					<i class="icon-info-sign"></i>
+					<span class="menu-text"> 活动管理 </span>
+				</a>
+			</li>
+		</if>
+		<if condition="$salesCode eq '1'">
+			<li onclick="clickset('salesCode')">
+				<a href="javascript:void(0)">
+					<i class="icon-pushpin"></i>
+					<span class="menu-text"> 邀请码管理 </span>
+				</a>
+			</li>
+		</if>
+		<if condition="$user eq '1'">
+			<li onclick="clickset('user')">
+				<a href="javascript:void(0)">
+					<i class="icon-key"></i>
+					<span class="menu-text"> 账户管理 </span>
+				</a>
+			</li>
+		</if>
+		<if condition="$weixin eq '1'">
+			<li onclick="clickset('weixin')">
+				<a href="javascript:void(0)">
+					<i class="icon-edit"></i>
+					<span class="menu-text"> 微信管理 </span>
+				</a>
+			</li>
+		</if>
+		<if condition="$countSale eq '1'">
+			<li onclick="clickset('countSales')">
+				<a href="javascript:void(0)">
+					<i class="icon-edit"></i>
+					<span class="menu-text"> 业务统计 </span>
+				</a>
+			</li>
+		</if>
+	</ul><!-- /.nav-list -->
+
+	<script type="text/javascript">
+		try{ace.settings.check('sidebar' , 'collapsed')}catch(e){}
+	</script>
+</div>

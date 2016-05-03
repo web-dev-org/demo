@@ -1,0 +1,105 @@
+<div class="sidebar" id="sidebar">
+	<script type="text/javascript">
+		try{ace.settings.check('sidebar' , 'fixed')}catch(e){}
+	</script>
+
+	<ul class="nav nav-list">
+		<li class="active">
+			<a href="">
+				<i class="icon-home"></i>
+				<span class="menu-text"> 系统首页 </span>
+			</a>
+		</li>
+
+		<li  onclick="clickset('order')">
+			<a href="javascript:void(0)">
+				<i class="icon-list"></i>
+				<span class="menu-text"> 行程管理 </span>
+			</a>
+		</li>
+
+		<if condition="$city eq '1'">
+			<li  onclick="clickset('city')">
+				<a href="javascript:void(0)">
+					<i class="icon-picture"></i>
+					<span class="menu-text"> 地域管理 </span>
+				</a>
+			</li>
+		</if>
+		
+		<if condition="$order eq '1'">
+			<li onclick="clickset('menu')">
+				<a href="javascript:void(0)">
+					<i class="icon-calendar"></i>
+					<span class="menu-text"> 酒店管理 </span>
+				</a>
+			</li>
+		</if>
+		
+		<if condition="$cityPercent eq '1'">
+			<li  onclick="clickset('citypercent')">
+				<a href="javascript:void(0)">
+					<i class="icon-facetime-video"></i>
+					<span class="menu-text"> 控房管理 </span>
+				</a>
+			</li>
+		</if>
+		
+		<if condition="$salesCode eq '1'">
+			<li onclick="clickset('salesCode')">
+				<a href="javascript:void(0)">
+					<i class="icon-pushpin"></i>
+					<span class="menu-text"> 酒店预订 </span>
+				</a>
+			</li>
+		</if>
+		<if condition="$product eq '1'">
+			<li onclick="clickset('product')">
+				<a href="javascript:void(0)">
+					<i class="icon-gift"></i>
+					<span class="menu-text"> Bus管理 </span>
+				</a>
+			</li>
+		</if>
+		
+		<if condition="$active eq '1'">
+			<li onclick="clickset('active')">
+				<a href="javascript:void(0)">
+					<i class="icon-info-sign"></i>
+					<span class="menu-text"> Bus预定 </span>
+				</a>
+			</li>
+		</if>
+		
+		<if condition="$price eq '1'">
+			<li onclick="clickset('price')">
+				<a href="javascript:void(0)">
+					<i class="icon-adjust"></i>
+					<span class="menu-text"> 景点管理 </span>
+				</a>
+			</li>
+		</if>
+		
+		<if condition="$count eq '1'">
+			<li onclick="clickset('count')">
+				<a href="javascript:void(0)">
+					<i class="icon-cloud"></i>
+					<span class="menu-text"> 旅行社管理 </span>
+				</a>
+			</li>
+		</if>
+
+		<if condition="$member eq '1'">
+			<li onclick="clickset('user')">
+				<a href="javascript:void(0)">
+					<i class="icon-group"></i>
+					<span class="menu-text"> 账户管理 </span>
+				</a>
+			</li>
+		</if>
+	</ul><!-- /.nav-list -->
+
+	<script type="text/javascript">
+		try{ace.settings.check('sidebar' , 'collapsed')}catch(e){}
+	</script>
+</div>

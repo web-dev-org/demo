@@ -1,0 +1,59 @@
+<include file="Public:header"/>
+<div class="col-sm-12 widget-container-span">
+	<div class="widget-box transparent">
+		<div class="widget-header">
+			<div class="widget-toolbar no-border">
+				<ul class="nav nav-tabs" id="myTab">
+					<li class="active"><a data-toggle="tab" href="#home1">酒店预订</a></li>
+				</ul>
+			</div>
+		</div>
+
+		<div class="widget-body">
+			<div class="widget-main padding-12 no-padding-left no-padding-right">
+				<div class="tab-content padding-4">
+					<div id="home1" class="tab-pane in active">
+						
+					</div>
+					
+					
+				</div>
+			</div>
+		</div>
+		
+		<script type="text/javascript">
+			function makeCode() {
+				$.ajax({
+					url: 'index.php?g=Admin&m=SalesCode&a=makeSalesCode',
+					type: 'POST',
+					dataType: 'json',
+					data: {},
+					success: function(data) {
+						if (data.result == 'succ') {
+							$('input[name="salesCode"]').val(data.code);
+						}
+					}
+				});
+				
+				
+			}
+			
+			
+			function reSubcity(o){
+				var id = $(o).parent().prev().prev().prev().prev().prev().prev().prev().html();
+				var staffName = $(o).parent().prev().prev().prev().prev().prev().prev().html();
+				var saleCode = $(o).parent().prev().prev().prev().prev().html();
+				var states = $(o).parent().prev().html();
+				var cityid = $(o).parent().prev().prev().html();
+				
+				$('select[name="city"]').val(cityid);
+				$('input[name="staffName"]').val(staffName);
+				$('input[name="codeId"]').val(id);
+				$('input[name="salesCode"]').val(saleCode);
+				$('select[name="states"]').val(states);
+				
+				$('#myTab li').eq(1).find('a').click();
+			}
+		</script>
+	</div>
+</div>

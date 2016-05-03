@@ -1,0 +1,104 @@
+<include file="Public:header"/>
+<link href="__PUBLIC__/Plugin/style/css/page.css" type="text/css" rel="stylesheet">	
+<style media="print" type="text/css">
+     .Noprint
+     {
+         display: none;
+     }
+ </style>
+<div class="col-sm-12 widget-container-span">
+	<div class="widget-box transparent">
+		<div class="widget-header">
+			<div class="widget-toolbar no-border">
+				<ul class="nav nav-tabs" id="myTab">
+					<li><a data-toggle="tab" href="#home1">详情</a></li>
+				</ul>
+			</div>
+		</div>
+		<div class="widget-body">
+			<div class="widget-main padding-12 no-padding-left no-padding-right">
+				<div class="tab-content padding-4">
+					<div id="home1" class="tab-pane in active">
+						<form class="form-horizontal J_ajaxForm" id="myform" action="{:U('Admin/Order/updateorder')}" method="post" >
+							<div class="tabbable">
+								<div class="tab-content">
+									<div class="tab-pane active">
+										<table cellpadding="2" cellspacing="2" width="100%">
+											<tbody>
+												<tr>
+													<td width=40%>支付状态：<input onfocus=this.blur() type="text" class="input"  style="border:0px; color:#000; font-size:12px;" name="paystatesname" value="{$result.paystatesname}"></td>
+													<td>订购单位:<input onfocus=this.blur() type="text" class="input"  style="border:0px; color:#000; font-size:12px;" name="storename" value="{$result.memstorename}"></td>
+												</tr>
+												<tr>
+													<td id="aaaa">　联系人：<input onfocus=this.blur() type="text" class="input"  style="border:0px; color:#000; font-size:12px;" name="contacts" value="{$result.memname}"></td>
+													<td>　　电话：<input onfocus=this.blur() type="text" class="input"  style="border:0px; color:#000; font-size:12px;" name="tel" value="{$result.memtel}"></td>
+												</tr>
+												<tr>
+													<td colspan="2">　　地址：<input onfocus=this.blur() type="text" class="input"  style="border:0px; color:#000;width:80%; font-size:12px;" name="address" value="{$result.memaddress}"></td>
+												</tr>
+												<tr>
+													<td>订单金额：<input onfocus=this.blur() type="text" class="input"  style="border:0px; color:#000; font-size:12px;" name="totalprice" value="{$result.totalprice}">元</td>
+													<td>　　数量：<input onfocus=this.blur() type="text" class="input"  style="border:0px; color:#000; font-size:12px;" name="totalnum" value="{$result.totalnum}"></td>
+												</tr>
+												<if condition="$result['carfee'] neq '0'">
+													<tr>
+														<td>　　运费：<input onfocus=this.blur() type="text" class="input"  style="border:0px; color:#000; font-size:12px;" name="carfee" value="{$result.carfee}">元</td>
+														<td>应付金额：<input onfocus=this.blur() type="text" class="input"  style="border:0px; color:#000; font-size:12px;" name="lastprice" value="{$result['totalprice'] + $result['carfee']}">元</td>
+													</tr>
+												</if>
+											</tbody>
+										</table>
+									</div>
+								</div>
+							</div>
+							
+							<div class="row">
+								<div class="col-xs-12 no-padding-right">
+									<div class="table-responsive">
+										<table id="sample-table-1"
+											class="table table-striped table-bordered table-hover">
+											<thead>
+												<tr>
+													<th width=10%>商品名称</th>
+													<th width=5%>单位</th>
+													<th width=5%>单价</th>
+													<th width=5%>购买数量</th>
+													<th width=5%>配送数量</th>
+													<th width=20%>备注要求</th>
+												</tr>
+											</thead>
+	
+											<tbody>
+											<volist name="product" id="vo" key="k">
+												<tr>
+													<td>{$vo.productname}</td>
+													<td>{$vo.unitname}</td>
+													<td>{$vo.price}</td>
+													<td>{$vo.buyNum}</td>
+													<td><if condition="$vo['sendNum'] eq ''">{$vo.buyNum} <else /> {$vo.sendNum} </if></td>
+													<td>{$vo.remark}</td>
+												</tr>
+											</volist>
+											</tbody>
+										</table>
+									</div>
+								</div>
+							</div>
+							<div class="Noprint">
+								<a class="btn btn-primary btn_submit J_ajax_submit_btn" onclick="printOrder()">确定打印</a>
+								<a class="btn" href="{:U('Admin/Order/orderDetail',array('id'=>$result['id'],'orderId'=>$orderId,'tel'=>$tel,'buyTime'=>$buyTime,'states'=>$states,'cityId'=>$cityId,'pageIndex'=>$pageIndex))}">返回</a>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<script>
+
+function printOrder()
+{
+	window.print();
+}
+</script>

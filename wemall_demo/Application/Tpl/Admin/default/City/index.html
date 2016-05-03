@@ -1,0 +1,149 @@
+<include file="Public:header"/>
+<div class="col-sm-12 widget-container-span">
+	<div class="widget-box transparent">
+		<div class="widget-header">
+			<div class="widget-toolbar no-border">
+				<ul class="nav nav-tabs" id="myTab">
+					<li class="active"><a data-toggle="tab" href="#home1">地域管理</a></li>
+					<li><a data-toggle="tab" href="#home2" >添加/修改地域</a></li>
+				</ul>
+			</div>
+		</div>
+
+		<div class="widget-body">
+			<div class="widget-main padding-12 no-padding-left no-padding-right">
+				<div class="tab-content padding-4">
+					<div id="home1" class="tab-pane in active">
+						<div class="row">
+							<div class="col-xs-12 no-padding-right">
+								<div class="table-responsive">
+									<table id="sample-table-1"
+										class="table table-striped table-bordered table-hover">
+										<thead>
+											<tr>
+												<th class="center">
+													<label> 
+														<input type="checkbox" class="ace"> <span class="lbl"></span>
+												  	</label>
+												</th>
+												<th>ID</th>
+												<th>地域名称</th>
+												<th>行政级别</th>
+												<th class="hidden-480">操作</th>
+											</tr>
+										</thead>
+
+										<tbody>
+										<volist name="city" id="city" key="k">
+											<tr>
+												<td class="center"><label> <input
+														type="checkbox" class="ace"> <span class="lbl"></span>
+												</label></td>
+												<td style="display:none">{$city.states}</td>
+												<td parent="{$city.pid}">{$city.id}</td>
+												<td class="hidden-480">{$city.name}</td>
+												<td class="hidden-480">{$city.rule}</td>
+												<td>
+													<a href="javascript:void(0);" onclick="addSubcity(this)" class="addsub btn btn-white btn-sm">添加地区</a>
+													<a href="javascript:void(0);" onclick="reSubcity(this)" class="btn btn-white btn-sm">修改</a>
+													<a class="J_ajax_del btn btn-white btn-sm" href="{:U('Admin/City/del',array('id'=>$city['id']))}">删除</a>
+												</td>
+											</tr>
+										</volist>
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+					</div>
+					
+					<div id="home2" class="tab-pane in">
+						<form class="form-horizontal J_ajaxForm" id="myform" action="{:U('Admin/City/addcity')}" method="post">
+							<div class="tabbable">
+								<div class="tab-content">
+									<div class="tab-pane active">
+										<table cellpadding="2" cellspacing="2" width="100%">
+											<tbody>
+												<tr>
+													<td width="140">上级:</td>
+													<td>
+														<select name="parent" class="normal_select" onchange="changeInput(this)">
+															<option value="0">作为一级分类</option>
+															<volist name="citylist" id="citylist" style="font-size:13px">
+																<option value="{$citylist.id}" id="{$citylist.pid}">{$citylist.name}</option>
+															</volist>
+														</select>
+													</td>
+												</tr>
+												<tr>
+													<td>地域名称:</td>
+													<td>
+														<input type="text" class="input" name="name" value="" style="font-size:13px">
+														<input type="hidden" name="addcity" value="0">
+													</td>
+												</tr>
+												<tr>
+													<td width="140">地域级别:</td>
+													<td>
+														<input type="text" class="input"  name="rule" value="" style="font-size:13px">
+													</td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+								</div>
+							</div>
+							<div class="form-actions">
+								<button class="btn btn-primary btn_submit J_ajax_submit_btn"
+									type="submit">提交</button>
+								<a class="btn" href="">返回</a>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<script type="text/javascript">
+			function addSubcity(o) {
+				var id = $(o).parent().prev().prev().prev().prev().prev().html();
+				var pid = $(o).parent().prev().prev().prev().prev().prev().attr('parent');
+								
+				$('select[name="parent"]').val(id);
+				$('input[name="addcity"]').val('0');
+				$('input[name="name"]').val('');
+				
+				
+				$('input[name="tax"]').attr("disabled",false);
+				$('input[name="rule"]').attr("disabled",false);
+				$('select[name="states"]').attr("disabled",false);
+				
+				
+				$('#myTab li').eq(1).find('a').click();
+			}
+			function reSubcity(o){
+				var id = $(o).parent().prev().prev().prev().prev().prev().html();
+				var pid = $(o).parent().prev().prev().prev().prev().prev().attr('parent');
+				var name = $(o).parent().prev().prev().prev().prev().html().replace(/&nbsp;/g,'').replace('├─','');
+				var tax = $(o).parent().prev().prev().prev().html();
+				var rule = $(o).parent().prev().prev().html();
+				var states = $(o).parent().prev().prev().prev().prev().prev().prev().html();
+				
+				$('select[name="parent"]').val(pid);
+				$('input[name="addcity"]').val(id);
+				$('input[name="rule"]').val(rule);
+				$('input[name="name"]').val(name);
+				$('input[name="tax"]').val(tax);
+				$('select[name="states"]').val(states);
+				
+				if (pid != "0") {
+					$('input[name="tax"]').attr("disabled",false);
+					$('input[name="rule"]').attr("disabled",false);
+					$('select[name="states"]').attr("disabled",false);
+				} 
+				
+				$('#myTab li').eq(1).find('a').click();
+			}
+		</script>
+	</div>
+</div>

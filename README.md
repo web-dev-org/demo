@@ -1,3 +1,3 @@
-[demo](https://www.fluidui.com/editor/live/preview/p_grZBtfrA08HxdaK7epuFN1tK7avciRoe.1462179591523)
-
-[db](https://my.vertabelo.com/model-view/eXD3H8GnoKK6TEl3ecIHGiJcuUQcDskn)
+##数据库相关
+- 设计文档使用[travel_db.mwb](https://github.com/web-dev-org/demo/blob/dev/documents/travel_db.mwb)
+- 文档编辑工具使用[MySQL Workbench](http://dev.mysql.com/downloads/workbench/)

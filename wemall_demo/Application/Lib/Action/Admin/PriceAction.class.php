@@ -8,164 +8,46 @@ class PriceAction extends PublicAction {
 	
 	// 商品显示
 	public function index() {
-		
-		$m = M ( "product_detail" );
-		
-		$menuid = $_POST ["menuid"];
-		$cityid = $_POST ["cityid"];
-		$pagedata = $_POST ["curPageData"];
-		$curPage = $_POST ["curPage"];
-		$goPage = $_POST['page'];
-		
-		$session_page_name='page_'.$this->username;
-		if ($pagedata) {
-			$pageJson = explode("|",$pagedata);
-			
-			for ( $i=0; $i<count($pageJson); $i++ ) { 
-				$pageDList[$i] = json_decode($pageJson[$i]);
-			}
-			
-			$pageLists = $_SESSION[$session_page_name];
-			
-			$pageLists[$curPage] = $pageDList;
-						
-			$_SESSION[$session_page_name] = $pageLists;
-		} else {
-			unset ( $_SESSION [$session_page_name] );
-		}
-		
-		$page = isset($_POST['page']) ? max(intval($_POST['page']), 1) : 1;		
-		$offset = 12;
-		$start = ($page - 1) * $offset;
-		
-		
-		$whereMid["username"] = $this->username;
-		if ( IS_POST && (!empty($menuid) && $menuid != '0' ) ) {
-
-			if ( !empty($menuid) && $menuid != '0' ) {
-				$menuList = M("menu")->where(array("id"=>$menuid))->find();
-				if ( $menuList["pid"] == "0" ) {
-					$idList = M("menu")->where(array("pid"=>$menuList["id"]))->getField("id",true);
-					$mid = array('in', $idList);
-				} else {
-					$mid = $menuid;
-				}
-			}
-			$whereMid['menuid'] = $mid;
-		}
-
-		if ( IS_POST && (!empty($cityid) && $cityid != '0' ) ) {
-			$whereMid['cityid'] = $cityid;
-		}
-		
-		$where = array();
-		if ( IS_POST && (!empty($menuid) && $menuid != '0' ) ) {
-			$productidL = M("product")->where( array("menuid" => $mid) )->getField("id", true);
-			$where['productid'] = array('in', $productidL);
-		}
+		import ( 'ORG.Util.Page' );
+		$m = M ( "view_spot" );
+	
+		$count = $m->count (); // 查询满足要求的总记录数
+		$Page = new Page ( $count, 12 ); // 实例化分页类 传入总记录数和每页显示的记录数
+		$Page -> setConfig('header', '条记录');
+		$Page -> setConfig('theme', '<li><a>%totalRow% %header%</a></li> <li>%upPage%</li> <li>%downPage%</li> <li>%first%</li>  <li>%prePage%</li>  <li>%linkPage%</li>  <li>%nextPage%</li> <li>%end%</li> ');//(对thinkphp自带分页的格式进行自定义)
+		$show = $Page->show (); // 分页显示输出
+	
+		// 超级管理员全部查处，地域管理员只查处该地域数据。
 		if ( $this->cityid != '0' ) {
 			$where['cityid'] = $this->cityid;
-		} else {
-			if ( IS_POST && !empty($cityid) && $cityid != '0' ) {
-				$where['cityid'] = $cityid;
-			}
-		}
-		
-		$count = $m->where($where)->count();
-
-		// 总页数设定
-		$totalPage = ceil($count / $offset);
-		for( $j=1; $j <= $totalPage; $j++ ) {
-			$pageList[$j-1]['page'] = $j;
-		}
-				
-		$result = $m->where($where)->limit ($start, $offset)->select ();
-		
-		for($i = 0; $i < count ( $result ); $i ++) {
-			// 取得商品基本信息
-			$unitid = $result [$i] ["id"];
-			$whereMid["id"] = $unitid;
-			$midList = M("product_mid")->where($whereMid)->find();
+			$result = $m->where($where)->limit ( $Page->firstRow . ',' . $Page->listRows )->order("id asc")->select ();
 			
-			if ( $midList ) {
-				$result [$i] = $midList;
-			} else {
-				$productid = $result [$i]["productid"];
-				$aProduct = M ("product")->where ( array ("id" => $productid) )->find ();
-				$result [$i] ["productname"] = $aProduct['name'];
-				$result [$i] ["img"] = $aProduct['img'];
-				$result [$i] ["info"] = $aProduct['info'];
-				$result [$i] ["menuid"] = $aProduct['menuid'];
-					
-				//地域取得
-				$cityRe = M("city")->where(array("id"=> $result [$i] ["cityid"]))->find();
-				$result [$i] ["cityname"] = $cityRe["name"];
-					
-				//当前状态
-				if ( $result [$i]["states"] == "1" ) {
-					$result [$i]["statesname"] = "出售";
-				} else {
-					$result [$i]["statesname"] = "下架";
-				}
-					
-				// 取得分类信息
-				$menu_id = $aProduct["menuid"];
-				$aMenu = M ( "Menu" )->where ( array ("id" => $menu_id) )->find ();
-				$result [$i] ["menu"] = $aMenu['name'];
-				//$result[$i]["vprice"] = number_format(($result[$i]["bprice"] + $result[$i]["percent"] * $result[$i]["bprice"] * 0.01), 2);
-				$result[$i]["nprice"] = number_format(($result[$i]["bprice"] + $result[$i]["percent"] * $result[$i]["bprice"] * 0.01), 2);
-				$result[$i]["amt"] = $result[$i]["nprice"] - $result[$i]["vprice"];
-			}
-			
-			// 取得切换页的数据
-			$pageDataLists = $_SESSION[$session_page_name];
-
-			$pageDataList = $pageDataLists[$goPage];
-			
-			if ( $pageDataList ) {
-				
-				foreach ( $pageDataList as $row ) {
-					if ( $row->id ==  $result[$i]["id"]) {
-						if ($row->percent !=  $result[$i]["percent"] || $row->price !=  $result[$i]["bprice"]) {
-							$result[$i]["percent"] = $row->percent;
-							$result[$i]["bprice"] = $row->price;
-							$result[$i]["check"] = $row->check;
-							$result[$i]["nprice"] = number_format(($result[$i]["bprice"] + $result[$i]["percent"] * $result[$i]["bprice"] * 0.01), 2);
-							$result[$i]["amt"] = number_format(($result[$i]["nprice"] - $result[$i]["vprice"]), 2);
-						}
-					}
-				}
-				
-			}
-
-			
-		}
-		
-		$menu = R ( "Api/Api/getarraymenu" );
-			
-		// 地域信息取得
-		if ( $this->cityid != '0' ) {
 			// 地域信息取得
-			$city = M("city")->where(array("cityid"=>$this->cityid))->find();
+			$city = M("city")->where($where)->find();
 		} else {
+			$result = $m->limit ( $Page->firstRow . ',' . $Page->listRows )->order("id asc")->select ();
 			// 地域信息取得
 			$city = M("city")->where(array("pid"=>"0"))->select();
 		}
 		
-		$dataNum = count($result);
+		for($i = 0; $i < count ( $result ); $i ++) {
+			// 取得商品基本信息
+			$cityid = $result [$i] ["cityid"];
+			$aCity = M ("city")->where ( array ("id" => $cityid) )->find ();
+			$result [$i] ["cityname"] = $aCity['name'];
+		}
 		
-		$this->assign('pageList', $pageList);
-		$this->assign('totalPage', $totalPage);
-		$this->assign('page', $page);
+		
+		$menu = R ( "Api/Api/getarraymenu" );
+		
+		
 		$this->assign ( "menu", $menu );
-		$this->assign ( "priceList", $result );
-		$this->assign ( "count", $count ); // data总数
-		$this->assign ( "dataNum", $dataNum ); // 当前页data数
+		$this->assign ( "addmenu", $menu );
+		$this->assign ( "page", $show ); // 赋值分页输出
+		$this->assign ( "result", $result );
+		$this->assign ( "count", $Pricecount );
 		$this->assign ( "city", $city );
-		$this->assign ( "menuid", $menuid );
-		$this->assign ( "cityid", $cityid );
-		$this->assign ( "userCityid", $this->cityid );
-		
+		$this->assign ( "usertype", $this->userType );
 		$this->display ();
 	}
 	

@@ -454,6 +454,20 @@ INSERT INTO `vix_order` (`id`, `paytype`, `openid`, `totalnum`, `totalprice`, `a
 
 -- --------------------------------------------------------
 
+CREATE TABLE IF NOT EXISTS `vix_view_spot` (
+  `id` int(5) NOT NULL AUTO_INCREMENT,
+  `name` varchar(32) NOT NULL,
+  `description` varchar(1024) NOT NULL,
+  `cityid` int(5) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=606 ;
+
+INSERT INTO `vix_view_spot` (`id`, `name`, `description`, `cityid`) VALUES
+(1, '景点1', '景点1的描述：风景秀丽，山美水美', 17),
+(2, '景点2', '风景2的描述：田园风光，空气宜人', 18);
+
+-- --------------------------------------------------------
+
 --
 -- 表的结构 `vix_product`
 --

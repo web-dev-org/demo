@@ -4,56 +4,56 @@
 		function clickset(name) {
 			$('.nav.nav-list li').removeClass('active');
 			$(this).addClass('active');
-			/* 商城设置 */
-			if ( name == "set" ){
-				$('#breadcrumbs ul li').eq(1).html('商城管理');
-				$('#main_iframe').attr("src","{:U('Admin/Store/index')}");	
+			/* 旅行プラン新規作成 */
+			if ( name == "travelplan" ){
+				$('#breadcrumbs ul li').eq(1).html('旅行プラン新規作成');
+				$('#main_iframe').attr("src","{:U('Admin/Travelplan/index')}");	
 			}
-			/* 分类管理 */
-			if ( name == "menu" ){
-				$('#breadcrumbs ul li').eq(1).html('分类管理');
-				$('#main_iframe').attr("src","{:U('Admin/Menu/index')}");	
+			/* 旅行プラン一覧 */
+			if ( name == "travelplanview" ){
+				$('#breadcrumbs ul li').eq(1).html('旅行プラン一覧');
+				$('#main_iframe').attr("src","{:U('Admin/Travelplanview/index')}");	
 			}
-			/* 地域管理 */
-			if ( name == "city" ){
-				$('#breadcrumbs ul li').eq(1).html('地域管理');
-				$('#main_iframe').attr("src","{:U('Admin/City/index')}");	
+			/* ホテル予約 */
+			if ( name == "bookhotel" ){
+				$('#breadcrumbs ul li').eq(1).html('ホテル予約');
+				$('#main_iframe').attr("src","{:U('Admin/Bookhotel/index')}");
 			}
-			/* 地域百分比管理 */
-			if ( name == "citypercent" ){
-				$('#breadcrumbs ul li').eq(1).html('地域百分比管理');
-				$('#main_iframe').attr("src","{:U('Admin/Menu_percent/index')}");
+			/* ホテル在庫管理 */
+			if ( name == "hotelmanagement" ){
+				$('#breadcrumbs ul li').eq(1).html('ホテル在庫管理');
+				$('#main_iframe').attr("src","{:U('Admin/Hotelmanagement/index')}");
 			}
-			/* 商品管理 */
-			if ( name == "product" ){
-				$('#breadcrumbs ul li').eq(1).html('商品管理');
-				$('#main_iframe').attr("src","{:U('Admin/Product/index')}");
+			/* BUS予約 */
+			if ( name == "bookbus" ){
+				$('#breadcrumbs ul li').eq(1).html('BUS予約');
+				$('#main_iframe').attr("src","{:U('Admin/Bookbus/index')}");
 			}
-			/* 价格管理 */
-			if ( name == "price" ){
-				$('#breadcrumbs ul li').eq(1).html('价格管理');
-				$('#main_iframe').attr("src","{:U('Admin/Price/index')}");
+			/* BUS管理 */
+			if ( name == "Buscontrol" ){
+				$('#breadcrumbs ul li').eq(1).html('BUS管理');
+				$('#main_iframe').attr("src","{:U('Admin/Buscontrol/index')}");
 			}
-			/* 发布管理 */
-			if ( name == "confirm" ){
-				$('#breadcrumbs ul li').eq(1).html('发布管理');
-				$('#main_iframe').attr("src","{:U('Admin/Price/updatePrice')}");
+			/* ホテル管理 */
+			if ( name == "hotelcontrol" ){
+				$('#breadcrumbs ul li').eq(1).html('ホテル管理');
+				$('#main_iframe').attr("src","{:U('Admin/Hotelcontrol/index')}");
 			}
-			/* 订单管理 */
-			if ( name == "order" ){
-				$('#breadcrumbs ul li').eq(1).html('订单管理');
-				$('#main_iframe').attr("src","{:U('Admin/Order/index')}");
+			/* スプト管理 */
+			if ( name == "spotcontrol" ){
+				$('#breadcrumbs ul li').eq(1).html('スプト管理');
+				$('#main_iframe').attr("src","{:U('Admin/Spotcontrol/index')}");
 			}
-			/* 活动管理 */
-			if ( name == "active" ){
-				$('#breadcrumbs ul li').eq(1).html('活动管理');
-				$('#main_iframe').attr("src","{:U('Admin/Active/index')}");
+			/* ユーザ管理 */
+			if ( name == "BackUser" ){
+				$('#breadcrumbs ul li').eq(1).html('ユーザ管理');
+				$('#main_iframe').attr("src","{:U('Admin/BackUser/index')}");
 			}
-			/* 用户管理 */
-			if ( name == "mem" ){
-				$('#breadcrumbs ul li').eq(1).html('用户管理');
-				$('#main_iframe').attr("src","{:U('Admin/Member/index')}");
-			}
+
+		}
+		</script>
+		
+		<!--
 			/* 微信管理 */
 			if ( name == "weixin" ){
 				$('#breadcrumbs ul li').eq(1).html('微信管理');
@@ -79,7 +79,6 @@
 				$('#breadcrumbs ul li').eq(1).html('业务统计');
 				$('#main_iframe').attr("src","{:U('Admin/Count/countSaleCode')}");
 			}
-		}
-		</script>
+		-->
 </body>
 </html>

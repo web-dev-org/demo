@@ -7,138 +7,120 @@
 		<li class="active">
 			<a href="">
 				<i class="icon-home"></i>
-				<span class="menu-text"> 后台欢迎页 </span>
+				<span class="menu-text"> 旅行システム </span>
 			</a>
 		</li>
-		<if condition="$set eq '1'">
-			<li onclick="clickset('set')">
+		<li onclick="clickset('travelplan')">
 				<a href="javascript:void(0)">
 					<i class="icon-pencil"></i>
-					<span class="menu-text"> 商城管理 </span>
+					<span class="menu-text"> 旅行プラン新規作成 </span>
 				</a>
-			</li>		
-		</if>
-
-		<if condition="$menu eq '1'">
-			<li  onclick="clickset('menu')">
+		</li>		
+		<li  onclick="clickset('travelplanview')">
 				<a href="javascript:void(0)">
 					<i class="icon-list"></i>
-					<span class="menu-text"> 分类管理 </span>
+					<span class="menu-text"> 旅行プラン一覧 </span>
 				</a>
-			</li>
-		</if>
+		</li>
 
-		<if condition="$city eq '1'">
-			<li  onclick="clickset('city')">
+		<li  onclick="clickset('bookhotel')">
 				<a href="javascript:void(0)">
 					<i class="icon-picture"></i>
-					<span class="menu-text"> 地域管理 </span>
+					<span class="menu-text"> ホテル予約 </span>
 				</a>
-			</li>
-		</if>
+		</li>
 		
-		<if condition="$cityPercent eq '1'">
-			<li  onclick="clickset('citypercent')">
+		<li  onclick="clickset('hotelmanagement')">
 				<a href="javascript:void(0)">
 					<i class="icon-facetime-video"></i>
-					<span class="menu-text"> 地域百分比管理 </span>
+					<span class="menu-text"> ホテル在庫管理 </span>
 				</a>
-			</li>
-		</if>
+		</li>
 
-		<if condition="$product eq '1'">
-			<li onclick="clickset('product')">
+		<li onclick="clickset('bookbus')">
 				<a href="javascript:void(0)">
 					<i class="icon-gift"></i>
-					<span class="menu-text"> 商品管理 </span>
+					<span class="menu-text"> BUS予約 </span>
 				</a>
-			</li>
-		</if>
+		</li>
 		
-		<if condition="$price eq '1'">
-			<li onclick="clickset('price')">
+		<li onclick="clickset('buscontrol')">
 				<a href="javascript:void(0)">
 					<i class="icon-adjust"></i>
-					<span class="menu-text"> 价格管理 </span>
+					<span class="menu-text"> BUS管理 </span>
 				</a>
-			</li>
-		</if>
+		</li>
 		
-		<if condition="$confirm eq '1'">
-			<li onclick="clickset('confirm')">
+		<li onclick="clickset('hotelcontrol')">
 				<a href="javascript:void(0)">
 					<i class="icon-tint"></i>
-					<span class="menu-text"> 发布管理 </span>
+					<span class="menu-text"> ホテル管理 </span>
 				</a>
-			</li>
-		</if>
-		
-		<if condition="$order eq '1'">
-			<li onclick="clickset('order')">
+		</li>
+	
+		<li onclick="clickset('spotcontrol')">
 				<a href="javascript:void(0)">
 					<i class="icon-calendar"></i>
-					<span class="menu-text"> 订单管理 </span>
+					<span class="menu-text"> スプト管理 </span>
 				</a>
-			</li>
-		</if>
-
-		<if condition="$count eq '1'">
-			<li onclick="clickset('count')">
+		</li>
+		
+		<li onclick="clickset('user')">
+				<a href="javascript:void(0)">
+					<i class="icon-group"></i>
+					<span class="menu-text"> ユーザ管理 </span>
+				</a>
+		</li>
+<!--
+		<li onclick="clickset('count')">
 				<a href="javascript:void(0)">
 					<i class="icon-cloud"></i>
 					<span class="menu-text"> 数据统计 </span>
 				</a>
-			</li>
-		</if>
+		</li>
 
-		<if condition="$member eq '1'">
-			<li onclick="clickset('mem')">
+		<li onclick="clickset('mem')">
 				<a href="javascript:void(0)">
 					<i class="icon-group"></i>
 					<span class="menu-text"> 用户管理 </span>
 				</a>
-			</li>
-		</if>
-		<if condition="$active eq '1'">
-			<li onclick="clickset('active')">
+		</li>
+
+		<li onclick="clickset('active')">
 				<a href="javascript:void(0)">
 					<i class="icon-info-sign"></i>
 					<span class="menu-text"> 活动管理 </span>
 				</a>
-			</li>
-		</if>
-		<if condition="$salesCode eq '1'">
-			<li onclick="clickset('salesCode')">
+		</li>
+
+		<li onclick="clickset('salesCode')">
 				<a href="javascript:void(0)">
 					<i class="icon-pushpin"></i>
 					<span class="menu-text"> 邀请码管理 </span>
 				</a>
-			</li>
-		</if>
-		<if condition="$user eq '1'">
-			<li onclick="clickset('user')">
+		</li>
+
+		<li onclick="clickset('user')">
 				<a href="javascript:void(0)">
 					<i class="icon-key"></i>
 					<span class="menu-text"> 账户管理 </span>
 				</a>
-			</li>
-		</if>
-		<if condition="$weixin eq '1'">
-			<li onclick="clickset('weixin')">
+		</li>
+		
+		<li onclick="clickset('weixin')">
 				<a href="javascript:void(0)">
 					<i class="icon-edit"></i>
 					<span class="menu-text"> 微信管理 </span>
 				</a>
-			</li>
-		</if>
-		<if condition="$countSale eq '1'">
-			<li onclick="clickset('countSales')">
+		</li>
+
+		<li onclick="clickset('countSales')">
 				<a href="javascript:void(0)">
 					<i class="icon-edit"></i>
 					<span class="menu-text"> 业务统计 </span>
 				</a>
-			</li>
-		</if>
+		</li>
+-->
 	</ul><!-- /.nav-list -->
 
 	<script type="text/javascript">

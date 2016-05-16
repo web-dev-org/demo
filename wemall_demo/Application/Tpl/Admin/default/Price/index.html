@@ -3,7 +3,6 @@
 var UEURL = '__ROOT__/Public/Plugin/umeditor/';
 </script>
 <link href="__PUBLIC__/Plugin/umeditor/themes/default/css/umeditor.css" type="text/css" rel="stylesheet">
-<link href="__PUBLIC__/Plugin/style/css/page.css" type="text/css" rel="stylesheet">
 <script type="text/javascript" src="__PUBLIC__/Plugin/umeditor/third-party/jquery.min.js"></script>
 <script type="text/javascript" charset="utf-8" src="__PUBLIC__/Plugin/umeditor/umeditor.config.js"></script>
 <script type="text/javascript" charset="utf-8" src="__PUBLIC__/Plugin/umeditor/umeditor.min.js"></script>
@@ -52,7 +51,7 @@ var UEURL = '__ROOT__/Public/Plugin/umeditor/';
 												<td>{$result.name}</td>
 												<td>{$result.cityname}</td>
 												<td>{$result.description}</td>
-												<td><a href="javascript:void(0);" onclick="reProduct(this);" class="btn btn-white btn-sm">修改</a><a class="J_ajax_del btn btn-white btn-sm" href="{:U('Admin/Product/delproduct',array('unitid'=>$result['id'],'productid'=>$result['productid'],'cityid'=>$result['cityid']))}">删除</a></td>
+												<td><a href="javascript:void(0);" onclick="reViewSpot(this);" class="btn btn-white btn-sm">修改</a><a class="J_ajax_del btn btn-white btn-sm" href="{:U('Admin/Price/delViewSpot',array('id'=>$result['id']))}">删除</a></td>
 											</tr>
 										</volist>
 										</tbody>
@@ -64,20 +63,109 @@ var UEURL = '__ROOT__/Public/Plugin/umeditor/';
 							</div>
 						</div>
 					</div>
+
 					<div id="home2" class="tab-pane in">
-						<div class="tabbable">
-							<div class="tab-content">
-								<div class="tab-pane active">
-									
+						<form class="form-horizontal J_ajaxForm" enctype="multipart/form-data" id="myform" action="{:U('Admin/Product/addProduct')}" method="post">
+							<div class="tabbable">
+								<div class="tab-content">
+									<div class="tab-pane active">
+										<table width="100%">
+											<tbody>
+												<tr>
+													<td>商品分类:</td>
+													<td><select class="select_2" name="addmenuid">
+															<volist name="addmenu" id="addmenu">
+															<option value="{$addmenu.id}">{$addmenu.name}</option>
+															</volist>
+													</select></td>
+												</tr>
+												<tr>
+													<td>商品名称:</td>
+													<td><input type="text" class="input col-sm-6" name="addname" value=""></td>
+													<td style="display:none"><input type="text" name="unitid" value=""></td>
+													<td style="display:none"><input type="text" name="productid" value=""></td>
+													<td style="display:none"><input type="text" name="cityid" value=""></td>
+												</tr>
+												<tr>
+													<td>商品图片:</td>
+													<td><input multiple="multiple" type="file" name="addimage">
+													<p class="help-block">允许的附件文件类型: jpg,gif,png,jpeg并且图片大小小于200k.</p></td>
+												</tr>
+												<tr>
+													<td>商品状态:</td>
+													<td><select name="addstatus"><option value="1">出售</option>
+														<option value="0">下架</option></select></td>
+												</tr>
+												<tr>
+													<td>非标标志:</td>
+													<td><select name="addfeibiao"><option value="1">否</option>
+														<option value="0">是</option></select></td>
+												</tr>
+												<tr>
+													<td>商品推荐:</td>
+													<td><select name="addtuijian"><option value="1">正常</option>
+														<option value="0">推荐</option></select></td>
+												</tr>
+												<tr>
+													<td>商品属性:</td>
+													<td>
+														<table id='unittable' width="60%" >
+															<tr>										
+																<td align="right">单位：</td>
+																<td align="right"><input type="text" class="tdInput" id="addunit_0" name="addunit_0" value=""></td>
+																<td align="right">默认订购量：</td>
+																<td align="right"><input type="text" class="tdInput" id="addnum_0" name="addnum_0" value=""></td>
+																<td align="right">最低订购量：</td>
+																<td align="right"><input type="text" class="tdInput" id="lownum_0" name="lownum_0" value=""></td>
+																<td><button onclick='addUnit()'>添加单位</button></td>	
+																<td style="display:none"><input type="text" id="addunitNum" name="addunitNum" value="1"></td>
+															</tr>
+														</table>
+													</td>											
+												</tr>
+												<tr>
+													<td>商品详情:</td>
+													<td><!--style给定宽度可以影响编辑器的最终宽度-->
+														<div type="text/plain" id="myEditor" style="width:660px;height:240px;">
+														</div>
+													</td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
 								</div>
 							</div>
-						</div>
+							<div class="form-actions">
+								<button class="btn btn-primary btn_submit J_ajax_submit_btn" type="submit">提交</button>
+								<a class="btn" href="">返回</a>
+							</div>
+						</form>
 					</div>
 				</div>
 			</div>
 		</div>
 		
 		<script type="text/javascript">
+			var flag = true;
+			function reViewSpot(o) {
+				$('select[name="addmenuid"]').val($(o).parent().parent().childrent().eq(1).text());
+				$('input[name="addname"]').val($(o).parent().parent().childrent().eq(2).text());
+				$('input[name="unitid"]').val($(o).parent().parent().childrent().eq(3).text());
+				$('input[name="productid"]').val($(o).parent().parent().childrent().eq(4).text());
+				$('#myEditor').html(info);
+				
+				if (flag) {
+					$('input[name="addimage"]').parent().append('<img src="__PUBLIC__/Uploads/'+img+'" id="goodimage" style="max-width:650px" class="img-thumbnail">');
+					flag = false;
+				}else{
+					$('#goodimage').attr("src","__PUBLIC__/Uploads/"+img);
+				}
+
+				$('#myTab li').removeClass("active");
+				$('#myTab li').eq(1).addClass("active");
+				$('#home1').removeClass("active");
+				$('#home2').addClass("active");
+			}
 
 	    	function submitPrice(button, page) {
 

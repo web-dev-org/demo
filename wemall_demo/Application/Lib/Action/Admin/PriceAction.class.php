@@ -51,189 +51,22 @@ class PriceAction extends PublicAction {
 		$this->display ();
 	}
 	
-	// 前发布确认画面
-	public function updatePrice() {
+	public function delViewSpot() {
+		$id = $_GET ["id"];
+		$count = M("view_spot")->where(array("id" => $id))->count();
 		
-		$where = array();
-		if (IS_POST) {
-			$menuid = $_POST ["menuid"];
-			$cityid = $_POST ["cityid"];
-			
-			if ( !empty($cityid) && $cityid != "0") {
-				$where["cityid"] = $cityid;	
-			}
-			if ( !empty($menuid) && $menuid != "0") {
-				$menuidList = M("menu")->where(array("pid"=>$menuid))->getField("id",true);
-				$where["menuid"] = array("in",$menuidList);
-			}
-			$this->assign ( "menuid", $menuid );
-			$this->assign ( "cityid", $cityid );
+		if ( $count > 1 ) {
+			//$result = M ("view_spot")->where (array("id" => $id))->delete();
 		} else {
-			if ( $this->cityid != "0" ) {
-				$where["cityid"] = $this->cityid;
-			}
+			//$result = M ("view_spot")->where (array("id" => $unitid))->delete();
 		}
 		
-		$where["username"] = array("neq",$this->username);
-		
-		$menu = M("menu")->where(array("pid"=>"0"))->select();
-		$city = M("city")->where(array("pid"=>"0"))->select();
-		$result = M("product_mid")->where($where)->select();
-
-		$this->assign ( "menu", $menu );		
-		$this->assign ( "city", $city );	
-		$this->assign ( "userCityid", $this->cityid );	
-		$this->assign ( "result", $result );
-		$this->display ();
-		
-	}
-	
-	// 发布商品价格方案
-	public function confirmPrice() {
-		$where = array();
-		
-		if (IS_POST) {
-			$menuid = $_POST ["proClass"];
-			$cityid = $_POST ["proCity"];
-			
-			if ( !empty($cityid) && $cityid != "0") {
-				$where["cityid"] = $cityid;	
-			}
-			if ( !empty($menuid) && $menuid != "0") {
-				$menuidList = M("menu")->where(array("pid"=>$menuid))->getField("id",true);
-				$where["menuid"] = array("in",$menuidList);
-			}
-			$this->assign ( "menuid", $menuid );
-			$this->assign ( "cityid", $cityid );
-		} else {
-			if ( $this->cityid != "0" ) {
-				$where["cityid"] = $this->cityid;
-			}
-		}
-		
-		$where["username"] = array("neq",$this->username);
-		
-		$priceList = M("product_mid")->where($where)->select();
-		
-		foreach( $priceList as $row ) {
-			$data["percent"] = $row["percent"];
-			$data["bprice"] = $row["bprice"];
-			$data["vprice"] = number_format(($row["bprice"] + $row["percent"] * $row["bprice"] * 0.01), 2);
-			
-			$result = M("product_detail")->where(array("id"=>$row["id"]))->save($data);
-		}
-
 		if ( $result !== false ) {
-			// 删除中间表
-			$del = M("product_mid")->where($where)->delete();
-			$this->success ( "发布商品价格成功！", U('Admin/Price/updatePrice') );
+			$this->success ( "删除景点成功！" );
+		} else {
+			$this->error ( "删除景点失败！" );
 		}
-		
 	}
-	
-	// 保存商品价格方案
-	public function savePrice() {
-		
-		// 其他页数据保存
-		$page = isset($_GET["page"]) ? intval($_GET["page"]) : 0;
-		$session_page_name='page_'.$this->username;
-		$pageLists = $_SESSION[$session_page_name];
-				
-		if ( $pageLists ) { 
-			foreach($pageLists as $key=>$value){
-				if ( $key != $page ) {
-					foreach( $value as $row ) {
-						$pageList = R ( "Admin/Price/addMidProduct", array ($row->check, $row->percent, $row->price,$row->id) );
-						
-						$midList = M("product_mid")->where(array("id" => $pageList["id"], "cityid" => $pageList["cityid"], "username"=>$pageList["username"]))->find();
-						
-						if ( !empty($row->check) ) {
-								
-							if ( $midList ){
-								M("product_mid")->where(array("id" => $pageList["id"], "cityid" => $pageList["cityid"], "username"=>$pageList["username"]))->save($pageList);
-							} else {
-								M("product_mid")->add($pageList);
-							}
-						} else {
-							if ( $midList ) {
-								M("product_mid")->where(array("id" => $pageList["id"], "cityid" => $pageList["cityid"], "username"=>$pageList["username"]))->delete();
-							}
-						}
-					}
-				}
-			}
-		}
-		
-		// 当前页的数据保存
-		$num = intval($_POST ["dataNum"]);
-		for( $i=1; $i<=$num; $i++ ) {
-			$checkname = "check_".$i;
-			$percentname = "percent_".$i;
-			$bpricename = "bprice_".$i;
-			$unitidname = "unitid_".$i;
-			$productidname = "productid_".$i;
-				
-			$check = $_POST [$checkname];
-			$percent = floatval($_POST [$percentname]);
-			$bprice = floatval($_POST [$bpricename]);
-			$unitid = $_POST [$unitidname];
-
-			$result = R ( "Admin/Price/addMidProduct", array ($check, $percent, $bprice, $unitid) );
-				
-			$midList = M("product_mid")->where(array("id" => $result["id"], "cityid" => $result["cityid"], "username"=>$result["username"]))->find();
-			
-			if ( !empty($check) ) {
-					
-				if ( $midList ){
-					M("product_mid")->where(array("id" => $result["id"], "cityid" => $result["cityid"], "username"=>$result["username"]))->save($result);
-				} else {
-					M("product_mid")->add($result);
-				}
-			} else {
-				if ( $midList ){
-					M("product_mid")->where(array("id" => $result["id"], "cityid" => $result["cityid"], "username"=>$result["username"]))->delete();
-				}
-			}
-		}
-		
-		// 清除页面保存数据
-		unset ( $_SESSION [$session_page_name] );
-		
-		$this->success ( "商品价格方案保存成功！", U('Admin/Price/index') );
-	}
-	
-	public function addMidProduct($check, $percent, $bprice, $unitid) {
-
-		$detail = M("product_detail")->where(array( "id" => $unitid ))->find();
-			
-		$productList = M("product")->where(array( "id" => $detail["productid"] ))->find();
-			
-		$city = M("city")->where(array("id" => $detail["cityid"]))->find();
-			
-		if (!empty($check)) {
-			$result["check"] = $check;
-		}else{
-			$result["check"] = "0";
-		}
-		$result["id"]=intval($detail["id"]);
-		$result["name"] = $detail["name"];
-		$result["cityid"]=intval($detail["cityid"]);
-		$result["productname"] = $productList["name"];
-		$result["percent"] = floatval($percent);
-		$result["bprice"] = floatval($bprice);
-		$result["vprice"] = $detail["vprice"];
-		$result["nprice"] = floatval(number_format(($bprice + $percent * $bprice * 0.01), 2));
-		$result["amt"] = floatval(number_format(($result["nprice"] - $result["vprice"]), 2));
-		$result["cityname"] = $city["name"];
-		$result["menuid"] = intval($productList["menuid"]);
-			
-		$aMenu = M ( "Menu" )->where ( array ("id" => $productList["menuid"]) )->find ();
-		$result["menu"] = $aMenu['name'];
-		$result["username"] = $this->username;
-		
-		return $result;
-	}
-	
 }
 
 ?>

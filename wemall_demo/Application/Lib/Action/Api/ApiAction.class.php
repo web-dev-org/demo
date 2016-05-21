@@ -47,6 +47,9 @@ class ApiAction extends Action {
 			return $result;
 		}
 	}
+	public function getCityList() {
+		return M("city")->select();
+	}
 	public function getarraymenu() {
 		$result = M ( "Menu" )->select ();
 		import ( 'Tree', APP_PATH . 'Common', '.php' );

@@ -13,7 +13,7 @@ var UEURL = '__ROOT__/Public/Plugin/umeditor/';
 		<div class="widget-header">
 			<div class="widget-toolbar no-border">
 				<ul class="nav nav-tabs" id="myTab">
-					<li class="acitve"><a data-toggle="tab" href="#home1">景点管理</a></li>
+					<li class="active"><a data-toggle="tab" href="#home1">景点管理</a></li>
 					<li><a data-toggle="tab" href="#home2">添加/修改景点</a></li>
 				</ul>
 			</div>
@@ -49,6 +49,7 @@ var UEURL = '__ROOT__/Public/Plugin/umeditor/';
 												</label></td>
 												<td>{$result.id}</td>
 												<td>{$result.name}</td>
+												<td style="display:none">{$result.cityid}</td>
 												<td>{$result.cityname}</td>
 												<td>{$result.description}</td>
 												<td><a href="javascript:void(0);" onclick="reViewSpot(this);" class="btn btn-white btn-sm">修改</a><a class="J_ajax_del btn btn-white btn-sm" href="{:U('Admin/Price/delViewSpot',array('id'=>$result['id']))}">删除</a></td>
@@ -65,66 +66,27 @@ var UEURL = '__ROOT__/Public/Plugin/umeditor/';
 					</div>
 
 					<div id="home2" class="tab-pane in">
-						<form class="form-horizontal J_ajaxForm" enctype="multipart/form-data" id="myform" action="{:U('Admin/Product/addProduct')}" method="post">
+						<form class="form-horizontal J_ajaxForm" enctype="multipart/form-data" id="myform" action="{:U('Admin/Price/addViewSpot')}" method="post">
 							<div class="tabbable">
 								<div class="tab-content">
 									<div class="tab-pane active">
 										<table width="100%">
 											<tbody>
 												<tr>
-													<td>商品分类:</td>
-													<td><select class="select_2" name="addmenuid">
-															<volist name="addmenu" id="addmenu">
-															<option value="{$addmenu.id}">{$addmenu.name}</option>
+													<td>景点位置:</td>
+													<td><select class="select_2" name="selectcity">
+															<volist name="citylist" id="city">
+															<option value="{$city.id}">{$city.name}</option>
 															</volist>
 													</select></td>
 												</tr>
 												<tr>
-													<td>商品名称:</td>
-													<td><input type="text" class="input col-sm-6" name="addname" value=""></td>
-													<td style="display:none"><input type="text" name="unitid" value=""></td>
-													<td style="display:none"><input type="text" name="productid" value=""></td>
-													<td style="display:none"><input type="text" name="cityid" value=""></td>
+													<td>景点名称:</td>
+													<td><input type="text" class="input col-sm-6" name="viewname" value=""></td>
+													<td style="display:none"><input type="text" name="viewid" value=""></td>
 												</tr>
 												<tr>
-													<td>商品图片:</td>
-													<td><input multiple="multiple" type="file" name="addimage">
-													<p class="help-block">允许的附件文件类型: jpg,gif,png,jpeg并且图片大小小于200k.</p></td>
-												</tr>
-												<tr>
-													<td>商品状态:</td>
-													<td><select name="addstatus"><option value="1">出售</option>
-														<option value="0">下架</option></select></td>
-												</tr>
-												<tr>
-													<td>非标标志:</td>
-													<td><select name="addfeibiao"><option value="1">否</option>
-														<option value="0">是</option></select></td>
-												</tr>
-												<tr>
-													<td>商品推荐:</td>
-													<td><select name="addtuijian"><option value="1">正常</option>
-														<option value="0">推荐</option></select></td>
-												</tr>
-												<tr>
-													<td>商品属性:</td>
-													<td>
-														<table id='unittable' width="60%" >
-															<tr>										
-																<td align="right">单位：</td>
-																<td align="right"><input type="text" class="tdInput" id="addunit_0" name="addunit_0" value=""></td>
-																<td align="right">默认订购量：</td>
-																<td align="right"><input type="text" class="tdInput" id="addnum_0" name="addnum_0" value=""></td>
-																<td align="right">最低订购量：</td>
-																<td align="right"><input type="text" class="tdInput" id="lownum_0" name="lownum_0" value=""></td>
-																<td><button onclick='addUnit()'>添加单位</button></td>	
-																<td style="display:none"><input type="text" id="addunitNum" name="addunitNum" value="1"></td>
-															</tr>
-														</table>
-													</td>											
-												</tr>
-												<tr>
-													<td>商品详情:</td>
+													<td>景点描述:</td>
 													<td><!--style给定宽度可以影响编辑器的最终宽度-->
 														<div type="text/plain" id="myEditor" style="width:660px;height:240px;">
 														</div>
@@ -148,159 +110,16 @@ var UEURL = '__ROOT__/Public/Plugin/umeditor/';
 		<script type="text/javascript">
 			var flag = true;
 			function reViewSpot(o) {
-				$('select[name="addmenuid"]').val($(o).parent().parent().childrent().eq(1).text());
-				$('input[name="addname"]').val($(o).parent().parent().childrent().eq(2).text());
-				$('input[name="unitid"]').val($(o).parent().parent().childrent().eq(3).text());
-				$('input[name="productid"]').val($(o).parent().parent().childrent().eq(4).text());
-				$('#myEditor').html(info);
-				
-				if (flag) {
-					$('input[name="addimage"]').parent().append('<img src="__PUBLIC__/Uploads/'+img+'" id="goodimage" style="max-width:650px" class="img-thumbnail">');
-					flag = false;
-				}else{
-					$('#goodimage').attr("src","__PUBLIC__/Uploads/"+img);
-				}
+				$('input[name="viewid"]').val($(o).parent().parent().children().eq(1).text());
+				$('input[name="viewname"]').val($(o).parent().parent().children().eq(2).text());
+				$('select[name="selectcity"]').val($(o).parent().parent().children().eq(3).text());
+				$('#myEditor').html($(o).parent().parent().children().eq(5).html());
 
 				$('#myTab li').removeClass("active");
 				$('#myTab li').eq(1).addClass("active");
 				$('#home1').removeClass("active");
 				$('#home2').addClass("active");
 			}
-
-	    	function submitPrice(button, page) {
-
-    			actionOne = "__URL__/savePrice/page/" + page;	    			
-	    		document.forms.priceform.action=actionOne;
-
-	    		document.priceform.submit();
-
-	    	}
-	    	
-	    	function changePrice(obj, row, price) {
-	    		
-	    		var percent = $('input[name="percent_'+row+'"]').val();
-	    		var bprice = $('input[name="bprice_'+row+'"]').val();
-	    		var vprice = $(obj).parent().next().html();
-	    		var checkboxid = "check_" + row;
-	    		
-	    		if ( !isNaN( percent )) {
-		    		percent = parseFloat(percent);
-	    		} else {
-	    			alert( "地域百分比只能输入数字！" );
-	    			return;
-	    		}
-	    		
-	    		if ( !isNaN( bprice )) {
-	    			bprice = parseFloat(bprice);
-	    		} else {
-	    			alert( "基本价格只能输入数字！" );
-	    			return;
-	    		}
-	    		
-
-	    		price = parseFloat(price);
-	    		
-	    		if ( price != bprice ) {
-	    			nprice = bprice + (bprice * percent * 0.01);
-	    			nprice = Math.round(nprice*100)/100;
-	    			
-	    			amt = nprice - vprice;
-	    			amt = Math.round(amt*100)/100;
-	    			$(obj).parent().next().next().html(nprice);
-	    			$(obj).parent().next().next().next().html(amt);
-	    			document.getElementById(checkboxid).checked = true;
-	    		}
-	    		
-	    	}
-	    	
-			function changePercent(obj, row, value) {
-	    						
-	    		var percent = $('input[name="percent_'+row+'"]').val();
-	    		var bprice = $('input[name="bprice_'+row+'"]').val();
-	    		var vprice = $(obj).parent().next().next().html();
-	    		var checkboxid = "check_" + row;
-	    			    		
-	    		if ( !isNaN( percent )) {
-		    		percent = parseFloat(percent);
-	    		} else {
-	    			alert( "地域百分比只能输入数字！" );
-	    			return;
-	    		}
-	    		
-	    		if ( !isNaN( bprice )) {
-	    			bprice = parseFloat(bprice);
-	    		} else {
-	    			alert( "基本价格只能输入数字！" );
-	    			return;
-	    		}
-	    		
-	    		value = parseFloat(value);
-	    		if ( value != percent ) {
-	    			nprice = bprice + (bprice * percent * 0.01);
-	    			nprice = Math.round(nprice*100)/100;
-	    			
-	    			amt = nprice - vprice;
-	    			amt = Math.round(amt*100)/100;
-	    			$(obj).parent().next().next().next().html(nprice);
-	    			$(obj).parent().next().next().next().next().html(amt);
-	    			document.getElementById(checkboxid).checked = true;
-	    		}
-	    		
-	    	}
-			
-			function selectPrice() {
-				var menu = $('select[name="proClass"]').val();
-				var city = $('select[name="proCity"]').val();
-				
-				post("{:U('Admin/Price/index')}", {menuid:menu,cityid:city});
-			}
-			
-			
-			function changePage(dataNum, curPage, goPage) {	
-				var datalist = new Array();
-				var menu = $('select[name="proClass"]').val();
-				var city = $('select[name="proCity"]').val();
-				var checkboxid = "";
-				var check = "";
-				var pagedata = new Array();
-				var index = 0;
-				for ( i=0; i<dataNum; i++ ) {
-					index = i + 1;
-					checkboxid = "check_" + index;
-					if ( document.getElementById(checkboxid).checked == true) {
-						check = "1";
-					} else {
-						check = "";
-					}
-					datalist = {
-							percent:$('input[name="percent_'+index+'"]').val(),
-							price:$('input[name="bprice_'+index+'"]').val(),
-							check:check,
-							id:$('input[name="unitid_'+index+'"]').val()
-					}
-					
-					pagedata[i] = JSON.stringify(datalist);
-				}
-				var data = pagedata.join("|");					
-				post("{:U('Admin/Price/index')}", {page:goPage,curPage:curPage,curPageData:data,menuid:menu,cityid:city});
-			}
-			
-			function post(URL, PARAMS) {        
-			    var temp = document.createElement("form");        
-			    temp.action = URL;        
-			    temp.method = "post";        
-			    temp.style.display = "none";        
-			    for (var x in PARAMS) {        
-			        var opt = document.createElement("textarea");        
-			        opt.name = x;        
-			        opt.value = PARAMS[x];            
-			        temp.appendChild(opt);        
-			    }        
-			    document.body.appendChild(temp);        
-			    temp.submit();        
-			    return temp;        
-			}        
-			
 		</script>
 		<script type="text/javascript">
 	    //实例化编辑器

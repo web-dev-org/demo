@@ -17,18 +17,9 @@ class PriceAction extends PublicAction {
 		$Page -> setConfig('theme', '<li><a>%totalRow% %header%</a></li> <li>%upPage%</li> <li>%downPage%</li> <li>%first%</li>  <li>%prePage%</li>  <li>%linkPage%</li>  <li>%nextPage%</li> <li>%end%</li> ');//(对thinkphp自带分页的格式进行自定义)
 		$show = $Page->show (); // 分页显示输出
 	
-		// 超级管理员全部查处，地域管理员只查处该地域数据。
-		if ( $this->cityid != '0' ) {
-			$where['cityid'] = $this->cityid;
-			$result = $m->where($where)->limit ( $Page->firstRow . ',' . $Page->listRows )->order("id asc")->select ();
-			
-			// 地域信息取得
-			$city = M("city")->where($where)->find();
-		} else {
-			$result = $m->limit ( $Page->firstRow . ',' . $Page->listRows )->order("id asc")->select ();
-			// 地域信息取得
-			$city = M("city")->where(array("pid"=>"0"))->select();
-		}
+		$result = $m->limit ( $Page->firstRow . ',' . $Page->listRows )->order("id asc")->select ();
+		// 地域信息取得
+		$citylist = R("Api/Api/getCityList");
 		
 		for($i = 0; $i < count ( $result ); $i ++) {
 			// 取得商品基本信息
@@ -37,17 +28,9 @@ class PriceAction extends PublicAction {
 			$result [$i] ["cityname"] = $aCity['name'];
 		}
 		
-		
-		$menu = R ( "Api/Api/getarraymenu" );
-		
-		
-		$this->assign ( "menu", $menu );
-		$this->assign ( "addmenu", $menu );
 		$this->assign ( "page", $show ); // 赋值分页输出
 		$this->assign ( "result", $result );
-		$this->assign ( "count", $Pricecount );
-		$this->assign ( "city", $city );
-		$this->assign ( "usertype", $this->userType );
+		$this->assign ( "citylist", $citylist );
 		$this->display ();
 	}
 	
@@ -65,6 +48,23 @@ class PriceAction extends PublicAction {
 			$this->success ( "删除景点成功！" );
 		} else {
 			$this->error ( "删除景点失败！" );
+		}
+	}
+
+	public function addViewSpot() {
+		$data ["cityid"] = $_POST ["selectcity"]; //分类
+		$data ["name"] = $_POST ["viewname"]; //名称
+		if (isset($_POST ["editorValue"])) {
+			$data ["description"] = $_POST ["editorValue"]; //详细	
+		}
+
+		if ($_POST["viewid"]) {
+			$data ["id"] = $_POST["viewid"]; //商品id
+			M ("view_spot")->save($data);
+			$this->success ( "修改景点成功！" );
+		}else{
+			$result = M("view_spot")->add($data);
+			$this->success ( "添加景点成功！" );
 		}
 	}
 }

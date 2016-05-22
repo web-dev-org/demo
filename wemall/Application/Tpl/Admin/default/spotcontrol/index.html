@@ -49,10 +49,10 @@ var UEURL = '__ROOT__/Public/Plugin/umeditor/';
 												</label></td>
 												<td>{$result.id}</td>
 												<td>{$result.name}</td>
-												<td style="display:none">{$result.prefetureid}</td>
-												<td>{$result.prefeturename}</td>
+												<td style="display:none">{$result.cityid}</td>
+												<td>{$result.cityname}</td>
 												<td>{$result.description}</td>
-												<td><a href="javascript:void(0);" onclick="reViewSpot(this);" class="btn btn-white btn-sm">修改</a><a class="J_ajax_del btn btn-white btn-sm" href="{:U('Admin/Price/delViewSpot',array('id'=>$result['id']))}">删除</a></td>
+												<td><a href="javascript:void(0);" onclick="reViewSpot(this);" class="btn btn-white btn-sm">修改</a><a class="J_ajax_del btn btn-white btn-sm" href="{:U('Admin/Spotcontrol/delViewSpot',array('id'=>$result['id']))}">删除</a></td>
 											</tr>
 										</volist>
 										</tbody>
@@ -65,7 +65,7 @@ var UEURL = '__ROOT__/Public/Plugin/umeditor/';
 						</div>
 					</div>
 					<div id="home2" class="tab-pane in">
-						<form class="form-horizontal J_ajaxForm" enctype="multipart/form-data" id="myform" action="{:U('Admin/Price/addViewSpot')}" method="post">
+						<form class="form-horizontal J_ajaxForm" enctype="multipart/form-data" id="myform" action="{:U('Admin/Spotcontrol/addViewSpot')}" method="post">
 							<div class="tabbable">
 								<div class="tab-content">
 									<div class="tab-pane active">
@@ -73,9 +73,9 @@ var UEURL = '__ROOT__/Public/Plugin/umeditor/';
 											<tbody>
 												<tr>
 													<td>景点位置:</td>
-													<td><select class="select_2" name="prefetureid">
-															<volist name="prefeturelist" id="prefeture">
-															<option value="{$prefeture.id}">{$prefeture.name}</option>
+													<td><select class="select_2" name="cityid">
+															<volist name="citylist" id="city">
+															<option value="{$city.id}">{$city.name}</option>
 															</volist>
 													</select></td>
 												</tr>
@@ -110,7 +110,7 @@ var UEURL = '__ROOT__/Public/Plugin/umeditor/';
 				function reViewSpot(o) {
 					$('input[name="viewid"]').val($(o).parent().parent().children().eq(1).text());
 					$('input[name="viewname"]').val($(o).parent().parent().children().eq(2).text());
-					$('select[name="prefetureid"]').val($(o).parent().parent().children().eq(3).text());
+					$('select[name="cityid"]').val($(o).parent().parent().children().eq(3).text());
 					$('#myEditor').html($(o).parent().parent().children().eq(5).html());
 
 					$('#myTab li').removeClass("active");

@@ -102,3 +102,15 @@ CREATE TABLE IF NOT EXISTS `www_admin` (
   `time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
+
+--
+-- 表的结构 景点管理`viewspot`
+--
+
+CREATE TABLE IF NOT EXISTS `www_viewspot` (
+  `id` int(5) NOT NULL AUTO_INCREMENT,
+  `name` varchar(50) NOT NULL,
+  `description` varchar(2000) DEFAULT NULL,
+  `cityid` int(5) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;

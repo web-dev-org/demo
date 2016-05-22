@@ -8,23 +8,10 @@ class ApiAction extends Action {
 			return $result ["username"];
 		}
 	}
-	
-	public function getarraycity() {
-		$result = M ( "City" )->select ();
-	
-		import ( 'Tree', APP_PATH . 'Common', '.php' );
-		$tree = new Tree (); // new 之前请记得包含tree文件!
-		$tree->tree ( $result ); // 数据格式请参考 tree方法上面的注释!
-		 
-		// 如果使用数组, 请使用 getArray方法
-		$result = $tree->getArray ();
-	
-		// 下拉菜单选项使用 get_tree方法
-		// $tree->get_tree();
-		if ($result) {
-			return $result;
-		}
+	public function getPrefetureList() {
+		return M("prefeture")->select();
 	}
+
 	public function addcity($parent,$name,$tax,$rule,$states,$addcity) {
 		if ($addcity == 0) {
 			$data ["name"] = $name;

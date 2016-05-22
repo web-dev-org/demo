@@ -17,23 +17,72 @@ var UEURL = '__ROOT__/Public/Plugin/umeditor/';
 			<div class="widget-main padding-12 no-padding-left no-padding-right">
 				<div class="tab-content padding-4">
 					<div id="home1" class="tab-pane in active">
+						<p>
+							<strong>团号：</strong>
+							<strong id="company"></strong>
+							<strong> </strong>
+							<strong id="begindate"></strong>
+							<strong>-</strong>
+							<strong id="agency"></strong>
+							<strong>-</strong>
+							<strong id="agent"></strong>
+							<strong>-</strong>
+							<strong id="index"></strong>
+							<strong id="index">团</strong>
+						</p>
 						<div class="row">
 							<div class="col-xs-12 no-padding-right">
 								<div class="table-responsive">
-									<table id="sample-table-1"
-										class="table table-striped table-bordered table-hover">
-										<thead>
-											<tr>
-
-											</tr>
-										</thead>
-
+									<table width="70%">
 										<tbody>
-										<volist name="result" id="result">
 											<tr>
-
+												<td>
+													<label>行程开始日：</label>
+												</td>
+												<td>
+													<input type="date" name="begindata" style="width:150px;" />
+												</td>
+												<td>
+													<label>行程结束日：</label>
+												</td>
+												<td>
+													<input type="date" style="width:150px;" />
+												</td>
+												<td>
+													<label>人数：</label>
+												</td>
+												<td>
+													<input type="text" \>
+												</td>
+												<td>
+													<label>接机牌：</label>
+												</td>
+												<td>
+													<input type="text" \>
+												</td>
 											</tr>
-										</volist>
+												<td>
+													<label>对方旅行社：</label>
+												</td>
+												<td>
+													<select name="agency">
+														<volist name="agencylist" id="agency">
+															<option value="{$agency.id}">{$agency.name}</option>
+														</volist>
+													</select>
+												</td>
+												<td>
+													<label>对方担当：</label>
+												</td>
+												<td>
+													<select name="agent">
+														<volist name="agentlist" id="agent">
+															<option value="{$agent.id}">{$agent.name}</option>
+														</volist>
+													</select>
+												</td>
+											</tr>
+
 										</tbody>
 									</table>
 									<div class="pagination" style="margin:0px;">
@@ -41,9 +90,6 @@ var UEURL = '__ROOT__/Public/Plugin/umeditor/';
 								</div>
 							</div>
 						</div>
-					</div>
-					<div id="home2" class="tab-pane in active">
-
 					</div>
 				</div>
 			</div>

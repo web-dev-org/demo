@@ -16,30 +16,13 @@ class ApiAction extends Action {
 		if ($addcity == 0) {
 			$data ["name"] = $name;
 			$data ["pid"] = $parent;
-			$data ["tax"] = $tax;
 			$data ["rule"] = $rule;
-			$data ["states"] = $states;
 			$result = M ( "City" )->add ( $data );
-			if ($result && $parent == "0") {
-				//追加地域百分比
-					$where["pid"]=array('neq',0);
-					$res = M ( "Menu" )->where($where)->select ();
-					$cityid = M("City")->getLastInsID();
-					foreach ($res as $row) {
-						$cityData ["cityid"] = $cityid;
-						$cityData["menuid"]=$row["id"];
-						$cityData ["percent"] = 0.00;
-						M ( "Menu_percent" )->add ( $cityData );
-					}
-				return $result;
-				}
 		} else {
 			$data ["id"] = $addcity;
 			$data ["name"] = str_replace ( "│ ", "", $name );
 			$data ["pid"] = $parent;
-			$data ["tax"] = $tax;
 			$data ["rule"] = $rule;
-			$data ["states"] = $states;
 			
 			$result = M ( "City" )->save ( $data );
 			if ($result) {

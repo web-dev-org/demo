@@ -29,9 +29,7 @@ CREATE TABLE IF NOT EXISTS `www_city` (
   `id` int(5) NOT NULL AUTO_INCREMENT,
   `pid` int(10) NOT NULL,
   `name` varchar(50) NOT NULL,
-  `tax` varchar(255) DEFAULT NULL,
   `rule` varchar(255) DEFAULT NULL,
-  `states` varchar(10) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 

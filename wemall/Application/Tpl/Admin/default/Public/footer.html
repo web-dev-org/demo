@@ -9,6 +9,11 @@
 				$('#breadcrumbs ul li').eq(1).html('旅行プラン新規作成');
 				$('#main_iframe').attr("src","{:U('Admin/Travelplan/index')}");	
 			}
+			/* 都道府県管理*/
+			if ( name == "city" ){
+				$('#breadcrumbs ul li').eq(1).html('都道府県管理');
+				$('#main_iframe').attr("src","{:U('Admin/City/index')}");	
+			}
 			/* 旅行プラン一覧 */
 			if ( name == "travelplanview" ){
 				$('#breadcrumbs ul li').eq(1).html('旅行プラン一覧');

@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta charset="UTF-8" />
-        <title>微信商城管理系统，vixzone开发。</title>
+        <title>旅游管理系统，vixzone开发。</title>
         <link rel="stylesheet" href="./css/install.css?v=9.0" />
     </head>
     <body>

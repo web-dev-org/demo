@@ -178,8 +178,11 @@ switch ($step) {
             
             //插入管理员
             $time = date('Y/m/d H:i:s');
+            $role = "1";
+            $states = "1";
             $dbPrefixadmin = $dbPrefix.'admin';
-            $query = "INSERT INTO `$dbPrefixadmin` (`id`, `username`, `password`, `time`) VALUES (1, \"$username\", \"$password\", \"$time\")";
+            $query = "INSERT INTO `$dbPrefixadmin` (`id`, `username`, `password`, `states`, `role`, `time`) VALUES (1, \"$username\", \"$password\",\"$states\",\"$role\", \"$time\")";
+            
             mysql_query($query);
         }
 

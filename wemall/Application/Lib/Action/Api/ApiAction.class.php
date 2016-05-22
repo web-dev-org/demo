@@ -12,7 +12,7 @@ class ApiAction extends Action {
 		return M("prefeture")->select();
 	}
 
-	public function addcity($parent,$name,$tax,$rule,$states,$addcity) {
+	public function addcity($parent,$name,$rule,$addcity) {
 		if ($addcity == 0) {
 			$data ["name"] = $name;
 			$data ["pid"] = $parent;

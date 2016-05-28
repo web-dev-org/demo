@@ -8,10 +8,9 @@ class ApiAction extends Action {
 			return $result ["username"];
 		}
 	}
-	public function getPrefetureList() {
-		return M("prefeture")->select();
+	public function getCityList() {
+		return M("city")->select();
 	}
-
 	public function addcity($parent,$name,$rule,$addcity) {
 		if ($addcity == 0) {
 			$data ["name"] = $name;

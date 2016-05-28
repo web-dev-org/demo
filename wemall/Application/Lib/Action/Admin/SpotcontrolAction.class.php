@@ -18,30 +18,24 @@ class SpotcontrolAction extends PublicAction {
 	
 		$results = $m->limit ( $Page->firstRow . ',' . $Page->listRows )->order("id asc")->select ();
 		// 地域信息取得
-		$prefeturelist = R("Api/Api/getPrefetureList");
+		$citylist = R("Api/Api/getCityList");
 		
 		for($i = 0; $i < count ( $results ); $i ++) {
 			// 取得商品基本信息
-			$prefetureid = $results [$i] ["prefetureid"];
-			$prefeture = M ("prefeture")->where ( array ("id" => $prefetureid) )->find ();
-			$results [$i] ["prefeturename"] = $prefeture['name'];
+			$cityid = $results [$i] ["cityid"];
+			$city = M ("city")->where ( array ("id" => $cityid) )->find ();
+			$results [$i] ["cityname"] = $city['name'];
 		}
 		
 		$this->assign ( "page", $show ); // 赋值分页输出
 		$this->assign ( "results", $results );
-		$this->assign ( "prefeturelist", $prefeturelist );
+		$this->assign ( "citylist", $citylist );
 		$this->display ();
 	}
 	
 	public function delViewSpot() {
 		$id = $_GET ["id"];
-		$count = M("viewspot")->where(array("id" => $id))->count();
-		
-		if ( $count > 1 ) {
-			//$result = M ("view_spot")->where (array("id" => $id))->delete();
-		} else {
-			//$result = M ("view_spot")->where (array("id" => $unitid))->delete();
-		}
+		$result = M ("viewspot")->where (array("id" => $id))->delete();
 		
 		if ( $result !== false ) {
 			$this->success ( "删除景点成功！" );
@@ -51,7 +45,7 @@ class SpotcontrolAction extends PublicAction {
 	}
 
 	public function addViewSpot() {
-		$data ["prefetureid"] = $_POST ["prefetureid"]; //分类
+		$data ["cityid"] = $_POST ["cityid"]; //分类
 		$data ["name"] = $_POST ["viewname"]; //名称
 		if (isset($_POST ["editorValue"])) {
 			$data ["description"] = $_POST ["editorValue"]; //详细	
@@ -59,10 +53,10 @@ class SpotcontrolAction extends PublicAction {
 
 		if ($_POST["viewid"]) {
 			$data ["id"] = $_POST["viewid"]; //商品id
-			M ("view_spot")->save($data);
+			M ("viewspot")->save($data);
 			$this->success ( "修改景点成功！" );
 		}else{
-			$result = M("view_spot")->add($data);
+			$result = M("viewspot")->add($data);
 			$this->success ( "添加景点成功！" );
 		}
 	}

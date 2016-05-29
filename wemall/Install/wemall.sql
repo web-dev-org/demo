@@ -1,4 +1,4 @@
--- phpMyAdmin SQL Dump
+﻿-- phpMyAdmin SQL Dump
 -- version 4.1.8
 -- http://www.phpmyadmin.net
 --
@@ -38,19 +38,20 @@ CREATE TABLE IF NOT EXISTS `www_city` (
 --
 CREATE TABLE IF NOT EXISTS `www_hotel_info` (
   `id` int(5) NOT NULL AUTO_INCREMENT,
+  `city_id` int(5) DEFAULT NULL,
   `name` varchar(50) NOT NULL,
   `level` int(5) NOT NULL,
-  `summarry` varchar(255) DEFAULT NULL,
+  `summary` varchar(255) DEFAULT NULL,
   `address` varchar(255) DEFAULT NULL,
-  `B_flg` int(5) NOT NULL,
-  `L_flg` int(5) NOT NULL,
-  `S_flg` int(5) NOT NULL,
+  `B_flg` int(5) NOT NULL DEFAULT '0',
+  `L_flg` int(5) NOT NULL DEFAULT '0',
+  `S_flg` int(5) NOT NULL DEFAULT '0',
   `S_price` float(8,2) NOT NULL DEFAULT '0.00',
   `T_price` float(8,2) NOT NULL DEFAULT '0.00',
   `D_price` float(8,2) NOT NULL DEFAULT '0.00',
   `book_times` int(5) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
 
 --
 -- 表的结构 导游表  `guide`
@@ -112,5 +113,19 @@ CREATE TABLE IF NOT EXISTS `www_viewspot` (
   `name` varchar(50) NOT NULL,
   `description` varchar(2000) DEFAULT NULL,
   `cityid` int(5) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+--
+-- 表的结构 景点管理`buscompany`
+--
+
+CREATE TABLE IF NOT EXISTS `www_buscompany` (
+  `id` int(5) NOT NULL AUTO_INCREMENT,
+  `name` varchar(50) NOT NULL,
+  `cityid` int(5) NOT NULL,
+  `tel` varchar(20) DEFAULT NULL,
+  `fax` varchar(20) DEFAULT NULL,
+  `contanter` varchar(20) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;

@@ -11,6 +11,9 @@ class ApiAction extends Action {
 	public function getCityList() {
 		return M("city")->select();
 	}
+	public function getSpotList() {
+	    return M("viewspot")->select();
+	}
 	public function addcity($parent,$name,$rule,$addcity) {
 		if ($addcity == 0) {
 			$data ["name"] = $name;

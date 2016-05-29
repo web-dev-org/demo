@@ -17,21 +17,11 @@ var UEURL = '__ROOT__/Public/Plugin/umeditor/';
 			<div class="widget-main padding-12 no-padding-left no-padding-right">
 				<div class="tab-content padding-4">
 					<div id="home1" class="tab-pane in active">
-						<p>
-							<strong>团号：</strong>
-							<strong id="company"></strong>
-							<strong> </strong>
-							<strong id="begindate"></strong>
-							<strong>-</strong>
-							<strong id="agency"></strong>
-							<strong>-</strong>
-							<strong id="agent"></strong>
-							<strong>-</strong>
-							<strong id="index"></strong>
-							<strong id="index">团</strong>
-						</p>
 						<div class="row">
 							<div class="col-xs-12 no-padding-right">
+								<div style="margin-bottom:10px">
+										<strong>团号：</strong>
+										<strong id="title">POLO ---团</strong>
 								<div class="table-responsive">
 									<table width="70%">
 										<tbody>
@@ -40,27 +30,28 @@ var UEURL = '__ROOT__/Public/Plugin/umeditor/';
 													<label>行程开始日：</label>
 												</td>
 												<td>
-													<input type="date" name="begindata" style="width:150px;" />
+													<input type="date" name="begindate" style="width:150px;" />
 												</td>
 												<td>
 													<label>行程结束日：</label>
 												</td>
 												<td>
-													<input type="date" style="width:150px;" />
+													<input type="date" name="enddate" style="width:150px;" />
 												</td>
 												<td>
 													<label>人数：</label>
 												</td>
 												<td>
-													<input type="text" \>
+													<input type="text" name="number" \>
 												</td>
 												<td>
 													<label>接机牌：</label>
 												</td>
 												<td>
-													<input type="text" \>
+													<input type="text" name="flight" \>
 												</td>
 											</tr>
+											<tr>
 												<td>
 													<label>对方旅行社：</label>
 												</td>
@@ -82,10 +73,42 @@ var UEURL = '__ROOT__/Public/Plugin/umeditor/';
 													</select>
 												</td>
 											</tr>
+											<tr>
+												<td /><td /><td /><td /><td /><td /><td />
+												<td>
+													<button onclick="generateList()">列表生成</button>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+								<div style="margin-top:10px" class="table-responsive">
+									<table id="sample-table-1"
+										class="table table-striped table-bordered table-hover">
+										<thead>
+											<tr>
+												<th class="center"><label> <input
+														type="checkbox" class="ace"> <span class="lbl"></span>
+												</label></th>
+												<th>ID</th>
+												<th>商品名称</th>
+												<th>商品分类</th>
+												<th>商品单位</th>
+												<th>所属地域</th>
+												<th>基本价格</th>
+												<th>当前状态</th>
+												<th>操作</th>
+											</tr>
+										</thead>
 
+										<tbody>
+											<tr>
+												<td class="center">hehe</td>
+											</tr>
 										</tbody>
 									</table>
 									<div class="pagination" style="margin:0px;">
+										{$page}
 									</div>
 								</div>
 							</div>
@@ -94,5 +117,25 @@ var UEURL = '__ROOT__/Public/Plugin/umeditor/';
 				</div>
 			</div>
 		</div>
+		<script type="text/javascript">
+			function generateList() {
+				var begindate = $('input[name="begindate"]').val()
+				var enddate = $('input[name="enddate"]').val()
+				var number = $('input[name="number"]').val()
+				var flight = $('input[name="flight"]').val()
+				var agency = $('select[name="agency"]').val()
+				var agent = $('select[name="agent"]').val()
+				if (begindate.length == 10 &&
+					enddate.length == 10 &&
+					number.length > 0 &&
+					flight.length > 0 &&
+					agency.length > 0 &&
+					agent > 0) {
+
+				} else {
+					alert("存在空字段或者无效字段！")
+				}
+			}
+		</script>
 	</div>
 </div>

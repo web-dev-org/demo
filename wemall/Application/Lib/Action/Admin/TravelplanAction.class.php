@@ -8,25 +8,33 @@ class TravelplanAction extends PublicAction {
 	
 	// TRAVEL予約
 	public function index() {
-		import ( 'ORG.Util.Page' );
+		$a = IS_POST;
+		$b = IS_GET;
+		import('ORG.Util.Page');
+		$agencylist = M('agency')->select();
+		$agentlist = M('agent')->select();
 
-		$this->display ();
+		$this->assign("agencylist", $agencylist);
+		$this->assign("agentlist", $agentlist);
+		$this->display();
 	}
 	
 	// 追加TRAVEL
-	public function addTravelPlan() {
-	
+	public function makeList() {
+		$begindate = strtotime($_POST['begindate']);
+		$enddate = strtotime($_POST['enddate']);
+		$number = $_POST['number'];
+		$flight = $_POST['flight'];
+		$agency = $_POST['agency'];
+		$agent = $_POST['agent'];
+        
+        $data = array();
+        $data['groupid'] = $this->makeGroupID($begindate, $agency, $agent);
+        $this->ajaxReturn($data,"OK",1);
 	}
-	
-	//删除TRAVEL
-	public function delTravelPlan() {
 
-
-	}
-	
-	// 取得TRAVELPlan
-	public function getTravelPlan() {
-
+	protected function makeGroupID($begindate, $agency, $agent) {
+		return 'A';
 	}
 }
 

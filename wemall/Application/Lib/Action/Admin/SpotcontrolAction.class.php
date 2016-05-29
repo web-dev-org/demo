@@ -18,7 +18,7 @@ class SpotcontrolAction extends PublicAction {
 	
 		$results = $m->limit ( $Page->firstRow . ',' . $Page->listRows )->order("id asc")->select ();
 		// 地域信息取得
-		$citylist = R("Api/Api/getCityList");
+		$citylist = M ( "city" )->select ();
 		
 		for($i = 0; $i < count ( $results ); $i ++) {
 			// 取得商品基本信息

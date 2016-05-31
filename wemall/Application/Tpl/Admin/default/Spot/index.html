@@ -52,7 +52,7 @@ var UEURL = '__ROOT__/Public/Plugin/umeditor/';
 												<td style="display:none">{$result.cityid}</td>
 												<td>{$result.cityname}</td>
 												<td>{$result.description}</td>
-												<td><a href="javascript:void(0);" onclick="reViewSpot(this);" class="btn btn-white btn-sm">修改</a><a class="J_ajax_del btn btn-white btn-sm" href="{:U('Admin/Spotcontrol/delViewSpot',array('id'=>$result['id']))}">删除</a></td>
+												<td><a href="javascript:void(0);" onclick="reViewSpot(this);" class="btn btn-white btn-sm">修改</a><a class="J_ajax_del btn btn-white btn-sm" href="{:U('Admin/Spot/delViewSpot',array('id'=>$result['id']))}">删除</a></td>
 											</tr>
 										</volist>
 										</tbody>
@@ -65,7 +65,7 @@ var UEURL = '__ROOT__/Public/Plugin/umeditor/';
 						</div>
 					</div>
 					<div id="home2" class="tab-pane in">
-						<form class="form-horizontal J_ajaxForm" enctype="multipart/form-data" id="myform" action="{:U('Admin/Spotcontrol/addViewSpot')}" method="post">
+						<form class="form-horizontal J_ajaxForm" enctype="multipart/form-data" id="myform" action="{:U('Admin/Spot/addViewSpot')}" method="post">
 							<div class="tabbable">
 								<div class="tab-content">
 									<div class="tab-pane active">

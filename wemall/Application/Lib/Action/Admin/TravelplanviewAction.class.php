@@ -1,6 +1,6 @@
 <?php
 
-class TravelplanviewAction extends PublicAction {
+class TravelPlanViewAction extends PublicAction {
 	
 	function _initialize() {
 		parent::_initialize ();

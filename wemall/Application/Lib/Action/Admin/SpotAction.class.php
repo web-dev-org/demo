@@ -1,6 +1,6 @@
 <?php
 
-class SpotcontrolAction extends PublicAction {
+class SpotAction extends PublicAction {
 	
 	function _initialize() {
 		parent::_initialize ();

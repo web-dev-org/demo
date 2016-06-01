@@ -1,7 +1,4 @@
 <include file="Public:header"/>
-<script type="text/javascript">
-var UEURL = '__ROOT__/Public/Plugin/umeditor/';
-</script>
 <script type="text/javascript" src="__PUBLIC__/../Install/js/ajaxForm.js"></script>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
 <div class="col-sm-12 widget-container-span">
@@ -22,9 +19,10 @@ var UEURL = '__ROOT__/Public/Plugin/umeditor/';
 							<div class="col-xs-12 no-padding-right">
 								<div style="margin-bottom:10px">
 										<strong>团号：</strong>
-										<strong id="groupname">{$groupname}</strong>
+										<strong id="groupname"></strong>
 								</div>
-								<form id="makelist" action="{:U('Admin/Travelplan/makeList')}" method="post">
+								<form id="makelist" action="{:U('Admin/TravelPlan/makeList')}" method="post">
+									<input type="hidden" name="groupid" value="">
 									<div class="table-responsive">
 										<table width="70%">
 											<tbody>
@@ -33,25 +31,25 @@ var UEURL = '__ROOT__/Public/Plugin/umeditor/';
 														<label>行程开始日：</label>
 													</td>
 													<td>
-														<input type="date" name="begindate" style="width:150px;" value="{$begindate}" />
+														<input type="date" name="begindate" style="width:150px;" />
 													</td>
 													<td>
 														<label>行程结束日：</label>
 													</td>
 													<td>
-														<input type="date" name="enddate" style="width:150px;" value="{$enddate}" />
+														<input type="date" name="enddate" style="width:150px;" />
 													</td>
 													<td>
 														<label>人数：</label>
 													</td>
 													<td>
-														<input type="text" name="number" value="{$number}" \>
+														<input type="text" name="number" \>
 													</td>
 													<td>
 														<label>接机牌：</label>
 													</td>
 													<td>
-														<input type="text" name="flight" value="{$flight}" \>
+														<input type="text" name="flight" \>
 													</td>
 												</tr>
 												<tr>
@@ -59,13 +57,9 @@ var UEURL = '__ROOT__/Public/Plugin/umeditor/';
 														<label>对方旅行社：</label>
 													</td>
 													<td>
-														<select name="agency">
+														<select name="agencyid">
 															<volist name="agencylist" id="agency">
-															<if condition="$agency.id eq $agency_selected">
-																<option value="{$agency.id}" selected="selected">{$agency.name}</option>
-															<else />
 																<option value="{$agency.id}">{$agency.name}</option>
-															</if>
 															</volist>
 														</select>
 													</td>
@@ -73,13 +67,9 @@ var UEURL = '__ROOT__/Public/Plugin/umeditor/';
 														<label>对方担当：</label>
 													</td>
 													<td>
-														<select name="agent">
+														<select name="agentid">
 															<volist name="agentlist" id="agent">
-															<if condition="$agent.id eq $agent_selected">
-																<option value="{$agent.id}" selected="selected">{$agent.name}</option>
-															<else />
 																<option value="{$agent.id}">{$agent.name}</option>
-															</if>
 															</volist>
 														</select>
 													</td>
@@ -185,14 +175,13 @@ var UEURL = '__ROOT__/Public/Plugin/umeditor/';
 			</div>
 		</div>
 		<script type="text/javascript">
-			var groupid = ''
 			function checkForm() {
 				var begindate = $('input[name="begindate"]').val()
 				var enddate = $('input[name="enddate"]').val()
 				var number = $('input[name="number"]').val()
 				var flight = $('input[name="flight"]').val()
-				var agency = $('select[name="agency"]').val()
-				var agent = $('select[name="agent"]').val()
+				var agency = $('select[name="agencyid"]').val()
+				var agent = $('select[name="agentid"]').val()
 				if (begindate.length != 10 ||
 					enddate.length != 10 ||
 					number.length <= 0 ||
@@ -203,28 +192,17 @@ var UEURL = '__ROOT__/Public/Plugin/umeditor/';
 					return false
 				}
 			}
-			function changeGroupName() {
-				var begindate = $('input[name="begindate"]').val()
-				var agency = $('select[name="agency"]').text().trim()
-				var agent = $('select[name="agent"]').text().trim()
-				if (begindate.length == 10 &&
-					agency.length > 0 &&
-					agent.length > 0) {
-					$('strong#groupname').text('POLO ' + begindate + ' - ' + agency + ' - ' + agent + ' - ' + window.groupid + '团')
-				}
-			}
 			function makeList(response) {
-				window.groupid = response.data.groupid
-				changeGroupName()
+				if (response.data.groupname) {
+					$('strong#groupname').text(response.data.groupname)
+					$('input[name="groupid"]').val(response.data.groupid)
+				}
 			}
 			$(document).ready(function(){
 				$('#makelist').ajaxForm({
 					beforeSubmit: checkForm,
 					success: makeList
 				})
-				$('input[name="begindate"]').change(changeGroupName)
-				$('select[name="agency"]').change(changeGroupName)
-				$('select[name="agent"]').change(changeGroupName)
 			})
 		</script>
 	</div>

@@ -8,8 +8,6 @@ class TravelPlanAction extends PublicAction {
 	
 	// TRAVEL予約
 	public function index() {
-		$a = IS_POST;
-		$b = IS_GET;
 		import('ORG.Util.Page');
 		$agencylist = M('agency')->select();
 		$agentlist = M('agent')->select();
@@ -21,20 +19,30 @@ class TravelPlanAction extends PublicAction {
 	
 	// 追加TRAVEL
 	public function makeList() {
-		$begindate = strtotime($_POST['begindate']);
-		$enddate = strtotime($_POST['enddate']);
-		$number = $_POST['number'];
-		$flight = $_POST['flight'];
-		$agency = $_POST['agency'];
-		$agent = $_POST['agent'];
-        
-        $data = array();
-        $data['groupid'] = $this->makeGroupID($begindate, $agency, $agent);
-        $this->ajaxReturn($data,"OK",1);
-	}
+		$data['begindate'] = $_POST['begindate'];
+		$data['enddate'] = $_POST['enddate'];
+		$data['number'] = $_POST['number'];
+		$data['flight'] = $_POST['flight'];
+		$data['agencyid'] = $_POST['agencyid'];
+		$data['agentid'] = $_POST['agentid'];
+        $data['id'] = $_POST['groupid'];
 
-	protected function makeGroupID($begindate, $agency, $agent) {
-		return 'A';
+        $travelplan = M("travelplan");
+        if ($data['id']) {
+        	$travelplan->save($data);
+        } else {
+            $groupmap = array('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J');
+			$count = $travelplan->where(array("begindate"=>$data['begindate'], "agencyid"=>$data['agencyid'], "agentid"=>$data['agentid']))->count();
+			$agency = M('agency')->where(array("id"=>$data['agencyid']))->find();
+			$agent = M('agent')->where(array("id"=>$data['agentid']))->find();
+			$data['name'] = sprintf("POLO %s - %s - %s - %s团", $data['begindate'], $agency['name'], $agent['name'], $groupmap[$count]);
+			$data['id'] = $travelplan->add($data);
+		}
+
+        $result = array();
+        $result['groupid'] = $data['id'];
+        $result['groupname'] = $data['name'];
+        $this->ajaxReturn($result,"OK",1);
 	}
 }
 

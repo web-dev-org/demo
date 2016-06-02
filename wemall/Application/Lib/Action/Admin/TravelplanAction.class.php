@@ -11,9 +11,11 @@ class TravelPlanAction extends PublicAction {
 		import('ORG.Util.Page');
 		$agencylist = M('agency')->select();
 		$agentlist = M('agent')->select();
+		$citylist = M('city')->select();
 
 		$this->assign("agencylist", $agencylist);
 		$this->assign("agentlist", $agentlist);
+		$this->assign("citylist", $citylist);
 		$this->display();
 	}
 	

@@ -73,11 +73,14 @@ var UEURL = '__ROOT__/Public/Plugin/umeditor/';
 											<tbody>
 												<tr>
 													<td>景点位置:</td>
-													<td><select class="select_2" name="cityid">
+													<td>
+														<select class="select_2" name="cityid">
+															<option value="0">选择位置</option>
 															<volist name="citylist" id="city">
 															<option value="{$city.id}">{$city.name}</option>
 															</volist>
-													</select></td>
+														</select>
+													</td>
 												</tr>
 												<tr>
 													<td>景点名称:</td>

@@ -30,15 +30,19 @@ class TravelPlanAction extends PublicAction {
         $data['id'] = $_POST['groupid'];
 
         $travelplan = M("travelplan");
-        if ($data['id']) {
-        	$travelplan->save($data);
+        if ($data['id'] != '') {
+        	//$travelplan->save($data);
+        	$data['name'] = session('data')['name'];
+        	session('data', $data);
         } else {
             $groupmap = array('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J');
 			$count = $travelplan->where(array("begindate"=>$data['begindate'], "agencyid"=>$data['agencyid'], "agentid"=>$data['agentid']))->count();
 			$agency = M('agency')->where(array("id"=>$data['agencyid']))->find();
 			$agent = M('agent')->where(array("id"=>$data['agentid']))->find();
 			$data['name'] = sprintf("POLO %s - %s - %s - %s团", $data['begindate'], $agency['name'], $agent['name'], $groupmap[$count]);
-			$data['id'] = $travelplan->add($data);
+			//$data['id'] = $travelplan->add($data);
+			$data['id'] = '0';
+			session('data', $data);
 		}
 
         $result = array();

@@ -90,77 +90,36 @@
 									<table id="maintable" class="table table-striped table-bordered table-hover" style="visibility:hidden">
 										<thead>
 											<tr>
-												<th>日期</th>
-												<th>景点</th>
-												<th>酒店</th>
-												<th>用餐</th>
+												<th style='width:100px'>日期</th>
+												<th style="padding:0px">
+													<table id='sample-table-1' class='table table-striped table-bordered table-hover' style='margin-bottom:0px'>
+														<thead>
+															<tr>
+																<th style='width:100px'>都道府县</th>
+																<th style='width:200px'>景点</th>
+																<th>景点说明</th>
+																<th style='width:50px'>操作</th>
+															</tr>
+														</thead>
+													</table>
+												</th>
+												<th style="padding:0px">
+													<table id='sample-table-1' class='table table-striped table-bordered table-hover' style='margin-bottom:0px'>
+														<thead>
+															<tr>
+																<th style='width:100px'>都道府县</th>
+																<th style='width:100px'>星级</th>
+																<th>酒店</th>
+																<th style='width:200px'>房间</th>
+																<th style='width:50px'>操作</th>
+															</tr>
+														</thead>
+													</table>
+												</th>
+												<th style="width:200px">用餐</th>
 											</tr>
 										</thead>
-										<tbody>
-											<tr>
-												<td></td>
-												<td style="padding:0px">
-													<table id="sample-table-1" class="table table-striped table-bordered table-hover" style="margin-bottom:0px">
-														<thead>
-															<tr>
-																<th>都道府县</th>
-																<th>景点</th>
-																<th>景点说明</th>
-																<th style="width:50px">操作</th>
-															</tr>
-														</thead>
-														<tbody>
-															<tr>
-																<td style="padding:0px">
-																	<select name="spot_cityid" style="width:100%" onchange="getSpotList()">
-																		<option value="0">选择地域</option>
-																		<volist name="citylist" id="city">
-																		<option value="{$city.id}">{$city.name}</option>
-																		</volist>
-																	</select>
-																</td>
-																<td style="padding:0px"></td>
-																<td style="padding:0px"></td>
-																<td style="padding:3px 0px 0px 0px">
-																	<button style="width:100%" onclick="addSpotItem()">添加</button>
-																</td>
-															</tr>
-														</tbody>
-													</table>
-												</td>
-												<td style="padding:0px">
-													<table id="sample-table-1" class="table table-striped table-bordered table-hover" style="margin-bottom:0px">
-														<thead>
-															<tr>
-																<th>都道府县</th>
-																<th>星级</th>
-																<th>酒店</th>
-																<th>房间</th>
-																<th style="width:50px">操作</th>
-															</tr>
-														</thead>
-														<tbody>
-															<tr>
-																<td style="padding:0px">
-																	<select name="hotel_cityid" style="width:100%" onchange="getHotelList()">
-																		<option value="0">选择地域</option>
-																		<volist name="citylist" id="city">
-																		<option value="{$city.id}">{$city.name}</option>
-																		</volist>
-																	</select>
-																</td>
-															<td style="padding:0px"></td>
-															<td style="padding:0px"></td>
-															<td style="padding:0px"></td>
-															<td style="padding:3px 0px 0px 0px">
-																<button style="width:100%" onclick="addHotelItem()">添加</button>
-															</td>
-															</tr>
-														</tbody>
-													</table>
-												</td>
-												<td style="padding:0px"></td>
-											</tr>
+										<tbody id="entrypoint">
 										</tbody>
 									</table>
 								</div>
@@ -210,17 +169,26 @@
 				if ($("#maintable").css("visibility") == "hidden") {
 					$("#maintable").css("visibility", "visible")
 				}
+				var count = duration - $("#entrypoint").children().size()
+				for (var i = 0; i < count; i++) {
+					var date = new Date(start + i * 24 * 60 * 60 * 1000)
+					var rowhtml = "<tr><td style='padding:0px;width:100px'><input type='text' style='width:100%;border:0px' readonly='readonly' name='headdate" + i + "' value='" + date.getFullYear() + "-" + (date.getMonth()+1) + "-" + date.getDate() + "'/></td><td style='padding:0px'><table id='sample-table-1' class='table table-striped table-bordered table-hover' style='margin-bottom:0px'><tbody><tr><td style='padding:0px;width:100px'><select style='width:100%' onchange='getSpotList(this)'><option value='0'>选择地域</option><volist name='citylist' id='city'><option value='{$city.id}'>{$city.name}</option></volist></select></td><td style='padding:0px;width:200px'><select name='spotid" + i + "' style='width:100%' onchange='changeSpotName(this)'><option value='0'>选择景点</option></select></td><td style='padding:0px'><input type='text' style='width:100%;border:0px' readonly='readonly' value=''></td><td style='padding:3px 0px 0px 0px;width:50px'><button style='width:50px' onclick='addSpotItem(this)'>添加</button></td></tr></tbody></table></td><td style='padding:0px'><table id='sample-table-1' class='table table-striped table-bordered table-hover' style='margin-bottom:0px'><tbody><tr><td style='padding:0px;width:100px'><select style='width:100%' onchange='getHotelList(this)'><option value='0'>选择地域</option><volist name='citylist' id='city'><option value='{$city.id}'>{$city.name}</option></volist></select></td><td style='padding:0px;width:100px'><select style='width:100%' onchange='changeHotelStar(this)'><option value='0'>选择星级</option></select></td><td style='padding:0px'><select name='hotelid" + i + "' style='width:100%' onchange='changeHotelName(this)'><option value='0'>选择酒店</option></select></td><td style='padding:0px;width:200px'>S<input type='text' style='width:50px;border:0px' name='sroom" + i + "' />T<input type='text' style='width:50px;border:0px' name='troom" + i + "' />D<input type='text' style='width:50px;border:0px' name='droom" + i + "' /></td><td style='padding:3px 0px 0px 0px;width:50px'><button style='width:50px' onclick='addHotelItem(this)'>添加</button></td></tr></tbody></table></td><td></td></tr>"
+					$("#entrypoint").append(rowhtml)
+				}
 			}
-			function addSpotItem() {
+			function addSpotItem(arg) {
 				alert("add spot item")
 			}
-			function getSpotList() {
-				alert("get spot list")
+			function getSpotList(arg) {
+				var spothtml = "<option value='{$city.id}'>{$city.name}</option>"
 			}
-			function addHotelItem() {
+			function changeSpotName(arg) {
+				alert("change spot name")
+			}
+			function addHotelItem(arg) {
 				alert("add hotel item")
 			}
-			function getHotelList() {
+			function getHotelList(arg) {
 				alert("get hotel list")
 			}
 			$(document).ready(function(){

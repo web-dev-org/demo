@@ -48,7 +48,13 @@ class TravelPlanAction extends PublicAction {
         $result = array();
         $result['groupid'] = $data['id'];
         $result['groupname'] = $data['name'];
-        $this->ajaxReturn($result,"OK",1);
+        $this->ajaxReturn($result, "OK", 1);
+	}
+
+	public function getSpotList() {
+		$cityid = $_POST['cityid'];
+		$spotlist = M('viewspot')->where(array("cityid"=>$cityid))->select();
+		$this->ajaxReturn($spotlist, "OK", 1);
 	}
 }
 

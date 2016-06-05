@@ -172,20 +172,40 @@
 				var count = duration - $("#entrypoint").children().size()
 				for (var i = 0; i < count; i++) {
 					var date = new Date(start + i * 24 * 60 * 60 * 1000)
-					var rowhtml = "<tr><td style='padding:0px;width:100px'><input type='text' style='width:100%;border:0px' readonly='readonly' name='headdate" + i + "' value='" + date.getFullYear() + "-" + (date.getMonth()+1) + "-" + date.getDate() + "'/></td><td style='padding:0px'><table id='sample-table-1' class='table table-striped table-bordered table-hover' style='margin-bottom:0px'><tbody><tr><td style='padding:0px;width:100px'><select style='width:100%' onchange='getSpotList(this)'><option value='0'>选择地域</option><volist name='citylist' id='city'><option value='{$city.id}'>{$city.name}</option></volist></select></td><td style='padding:0px;width:200px'><select name='spotid" + i + "' style='width:100%' onchange='changeSpotName(this)'><option value='0'>选择景点</option></select></td><td style='padding:0px'><input type='text' style='width:100%;border:0px' readonly='readonly' value=''></td><td style='padding:3px 0px 0px 0px;width:50px'><button style='width:50px' onclick='addSpotItem(this)'>添加</button></td></tr></tbody></table></td><td style='padding:0px'><table id='sample-table-1' class='table table-striped table-bordered table-hover' style='margin-bottom:0px'><tbody><tr><td style='padding:0px;width:100px'><select style='width:100%' onchange='getHotelList(this)'><option value='0'>选择地域</option><volist name='citylist' id='city'><option value='{$city.id}'>{$city.name}</option></volist></select></td><td style='padding:0px;width:100px'><select style='width:100%' onchange='changeHotelStar(this)'><option value='0'>选择星级</option></select></td><td style='padding:0px'><select name='hotelid" + i + "' style='width:100%' onchange='changeHotelName(this)'><option value='0'>选择酒店</option></select></td><td style='padding:0px;width:200px'>S<input type='text' style='width:50px;border:0px' name='sroom" + i + "' />T<input type='text' style='width:50px;border:0px' name='troom" + i + "' />D<input type='text' style='width:50px;border:0px' name='droom" + i + "' /></td><td style='padding:3px 0px 0px 0px;width:50px'><button style='width:50px' onclick='addHotelItem(this)'>添加</button></td></tr></tbody></table></td><td></td></tr>"
+					var rowhtml = "<tr><td style='padding-bottom:0px'><input type='hidden' name='headdate" + i + "' value='" + date.getFullYear() + "/" + (date.getMonth()+1) + "/" + date.getDate() + "'/>" + date.getFullYear() + "/" + (date.getMonth()+1) + "/" + date.getDate() + "</td><td style='padding:0px'><table id='sample-table-1' class='table table-striped table-bordered table-hover' style='margin-bottom:0px'><tbody><tr><td style='padding:0px;width:100px'><select style='width:100%' onchange='getSpotList(this)'><option value='0'>选择地域</option><volist name='citylist' id='city'><option value='{$city.id}'>{$city.name}</option></volist></select></td><td style='padding:0px;width:200px'><select name='spotid" + i + "' style='width:100%'><option value='0'>选择景点</option></select></td><td style='padding:5px 0px 0px 5px'></td><td style='padding:3px 0px 0px 0px;width:50px'><button style='width:50px' onclick='addSpotRow(this)'>添加</button></td></tr></tbody></table></td><td style='padding:0px'><table id='sample-table-1' class='table table-striped table-bordered table-hover' style='margin-bottom:0px'><tbody><tr><td style='padding:0px;width:100px'><select style='width:100%' onchange='getHotelList(this)'><option value='0'>选择地域</option><volist name='citylist' id='city'><option value='{$city.id}'>{$city.name}</option></volist></select></td><td style='padding:0px;width:100px'><select style='width:100%' onchange='changeHotelStar(this)'><option value='0'>选择星级</option></select></td><td style='padding:0px'><select name='hotelid" + i + "' style='width:100%' onchange='changeHotelName(this)'><option value='0'>选择酒店</option></select></td><td style='padding:0px;width:200px'>S<input type='text' style='width:50px;border:0px' name='sroom" + i + "' />T<input type='text' style='width:50px;border:0px' name='troom" + i + "' />D<input type='text' style='width:50px;border:0px' name='droom" + i + "' /></td><td style='padding:3px 0px 0px 0px;width:50px'><button style='width:50px' onclick='addHotelRow(this)'>添加</button></td></tr></tbody></table></td><td></td></tr>"
 					$("#entrypoint").append(rowhtml)
 				}
 			}
-			function addSpotItem(arg) {
+			function addSpotRow(arg) {
 				alert("add spot item")
 			}
 			function getSpotList(arg) {
-				var spothtml = "<option value='{$city.id}'>{$city.name}</option>"
+				$(arg).parent().next().children().html("<option value='0'>选择景点</option>")
+				$(arg).parent().next().next().html("")
+				if (arg.value != "0") {
+					$.ajax({
+						type: "POST",
+						url: "{:U('Admin/TravelPlan/getSpotList')}",
+						data: "cityid=" + arg.value,
+						success: function(response) {
+							$.each(response.data, function(i, item) {
+								$(arg).parent().next().children().append("<option value='" + item.id + "'>" + item.name + "</option>")
+							})
+							$(arg).parent().next().children().change(function(){
+								var spotselect = $(this)
+								spotselect.parent().next().html("")
+								$.each(response.data, function(i, item) {
+									if (spotselect.val() == item.id) {
+										spotselect.parent().next().html(item.description)
+										spotselect.parent().next().children().css('margin-bottom', '5px')
+									}
+								})
+							})
+						}
+					})
+				}
 			}
-			function changeSpotName(arg) {
-				alert("change spot name")
-			}
-			function addHotelItem(arg) {
+			function addHotelRow(arg) {
 				alert("add hotel item")
 			}
 			function getHotelList(arg) {

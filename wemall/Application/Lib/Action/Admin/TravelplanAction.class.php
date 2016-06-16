@@ -12,10 +12,12 @@ class TravelPlanAction extends PublicAction {
 		$agencylist = M('agency')->select();
 		$agentlist = M('agent')->select();
 		$citylist = M('city')->select();
+        $starlist = array("0"=>"三星", "1"=>"四星", "2"=>"五星");
 
 		$this->assign("agencylist", $agencylist);
 		$this->assign("agentlist", $agentlist);
 		$this->assign("citylist", $citylist);
+        $this->assign("starlist", $starlist);
 		$this->display();
 	}
 	
@@ -50,6 +52,14 @@ class TravelPlanAction extends PublicAction {
         $result['groupname'] = $data['name'];
         $this->ajaxReturn($result, "OK", 1);
 	}
+
+    public function getHotelList() {
+        //&#9679;&#9650;
+    }
+
+    public function savePlan() {
+        
+    }
 
 	public function getSpotList() {
 		$cityid = $_POST['cityid'];

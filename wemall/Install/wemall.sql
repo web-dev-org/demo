@@ -78,6 +78,17 @@ CREATE TABLE IF NOT EXISTS `www_agency` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 --
+-- 表的结构 旅行社担当管理`agent`
+--
+
+CREATE TABLE IF NOT EXISTS `www_agent` (
+  `id` int(5) NOT NULL AUTO_INCREMENT,
+  `name` varchar(50) NOT NULL,
+  `angency_id` int(5) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+--
 -- 表的结构 Bus管理`bus`
 --
 
@@ -127,5 +138,21 @@ CREATE TABLE IF NOT EXISTS `www_buscompany` (
   `tel` varchar(20) DEFAULT NULL,
   `fax` varchar(20) DEFAULT NULL,
   `contanter` varchar(20) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+--
+-- 表的结构 旅行计划管理`travelplan`
+--
+
+CREATE TABLE IF NOT EXISTS `www_travelplan` (
+  `id` int(5) NOT NULL AUTO_INCREMENT,
+  `name` varchar(50) NOT NULL,
+  `begindate` DATE NOT NULL,
+  `enddate` DATE NOT NULL,
+  `number` int(5) NOT NULL,
+  `flight` varchar(50) NOT NULL,
+  `agencyid` int(5) NOT NULL,
+  `agentid` int(5) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;

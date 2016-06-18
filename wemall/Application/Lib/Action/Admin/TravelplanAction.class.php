@@ -55,10 +55,11 @@ class TravelPlanAction extends PublicAction {
 
     public function getHotelList() {
         //&#9679;&#9650;
-    }
-
-    public function savePlan() {
-        
+        $cityid = $_POST['cityid'];
+        $level = $_POST['starid'];
+        $hotellist = M('hotel_info')->where(array("cityid"=>$cityid, "level"=>$level))->select();
+        $data = $hotellist;
+        $this->ajaxReturn($data, "OK", 1);
     }
 
 	public function getSpotList() {

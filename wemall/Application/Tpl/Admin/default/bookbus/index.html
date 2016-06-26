@@ -33,7 +33,7 @@ var UEURL = '__ROOT__/Public/Plugin/umeditor/';
 										<thead>
 											<tr>
 												<div style="margin-bottom:10px">
-												Bus予約日：<input type="text" id="c1" onclick="J.calendar.get({dir:'right'});"/>
+												Bus予約日：<input type="date" name="begindate" style="width:150px;" />
 												都道府県：<input type="text" class="input" style="width:150px;" id="seBuytime" name="seBuytime" value="{$seBuytime}">
 												</div>
 												<div style="margin-bottom:10px">
@@ -94,60 +94,40 @@ var UEURL = '__ROOT__/Public/Plugin/umeditor/';
 								<div class="tab-content">
 									<div class="tab-pane active">
 										<table width="100%">
-											<tbody>
+										
+										<thead>
+											<div>
+											<tr>
+											团号：<input type="date" name="begindate" style="width:150px;" />
+											<button type="submit">团号内容Copy</button>
+											</tr>
+											<tr>
+											Bus予約开始日：<input type="date" name="begindate" style="width:150px;" />
+											Bus予約终了日：<input type="date" name="begindate" style="width:150px;" />
+											<button type="submit">生成BUS预订明细</button>
+											</tr>
+											</div>
+												<th>日期</th>
+												<th>都道府県</th>
+												<th>スプト</th>
+												<th>ホテル</th>
+												<th>Bus会社</th>
+												<th>連絡先</th>
+												<th>用車日</th>
+												<th>T/Dホテル</th>
+												<th>駐車</th>
+												<th>案内者</th>
+												<th>案内者電話</th>
+												<th>追加人数</th>
+												<th>BUS種類</th>
+												<th>BUS予定数</th>
+												<th>予定状態</th>
+												</thead>
+										<tbody>
 												<tr>
-													<td>都道府県:</td>
-													<td><select class="select_1" name="cityid">
-															<volist name="citylist" id="city">
-															<option value="{$city.id}">{$city.name}</option>
-															</volist>
-													</select></td>
-													<td>日期:</td>
-													<td><input type="date" class="input" style="width:150px;" id="seBuytime" name="seBuytime" value="{$seBuytime}"></td>
-													<td>スプト:</td>
-													<td><select class="select_2" name="spotid">
-															<volist name="spotlist" id="spot">
-															<option value="{$spot.id}">{$spot.name}</option>
-															</volist>
-													</select></td>
-													<td>ホテル:</td>
-													<td><select class="select_2" name="spotid">
-															<volist name="spotlist" id="spot">
-															<option value="{$spot.id}">{$spot.name}</option>
-															</volist>
-													</select></td>
-													<td>Bus会社:</td>
-													<td><select class="select_2" name="spotid">
-															<volist name="spotlist" id="spot">
-															<option value="{$spot.id}">{$spot.name}</option>
-															</volist>
-													</select></td>
-													<td>連絡先:</td>
-													<td><select class="select_2" name="spotid">
-															<volist name="spotlist" id="spot">
-															<option value="{$spot.id}">{$spot.name}</option>
-															</volist>
-													</select></td>
-													<td>用車日:</td>
-													<td><input type="date" class="input" style="width:150px;" id="seBuytime" name="seBuytime" value="{$seBuytime}"></td>
-													<td>T/Dホテル:</td>
-													<td><input type="text" class="input" style="width:150px;" id="seBuytime" name="seBuytime" value="{$seBuytime}"></td>
-													<td>駐車:</td>
-													<td><input type="text" class="input" style="width:150px;" id="seBuytime" name="seBuytime" value="{$seBuytime}"></td>
-													<td>案内者:</td>
-													<td><input type="text" class="input" style="width:150px;" id="seBuytime" name="seBuytime" value="{$seBuytime}"></td>
-													<td>案内者電話:</td>
-													<td><input type="text" class="input" style="width:150px;" id="seBuytime" name="seBuytime" value="{$seBuytime}"></td>
-													<td>追加人数:</td>
-													<td><input type="text" class="input" style="width:150px;" id="seBuytime" name="seBuytime" value="{$seBuytime}"></td>
-													<td>BUS種類:</td>
-													<td><input type="text" class="input" style="width:150px;" id="seBuytime" name="seBuytime" value="{$seBuytime}"></td>
-													<td>BUS予定数:</td>
-													<td><input type="text" class="input" style="width:150px;" id="seBuytime" name="seBuytime" value="{$seBuytime}"></td>
-													<td>予定状態:</td>
-													<td><input type="text" class="input" style="width:150px;" id="seBuytime" name="seBuytime" value="{$seBuytime}"></td>
+													
 												</tr>
-											</tbody>
+										</tbody>
 										</table>
 									</div>
 								</div>

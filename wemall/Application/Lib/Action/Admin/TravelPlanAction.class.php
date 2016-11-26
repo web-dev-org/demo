@@ -12,19 +12,14 @@ class TravelPlanAction extends PublicAction {
 		$agencylist = M('agency')->select();
 		$agentlist = M('agent')->select();
 		$citylist = M('city')->select();
+        $foodlist = M('food')->select();
         $starlist = array("0"=>"三星", "1"=>"四星", "2"=>"五星");
-        $blist = array("选择早餐", "酒店提供", "日式早餐");
-        $llist = array("选择午餐", "酒店提供", "日式午餐");
-        $dlist = array("选择晚餐", "酒店提供", "日式晚餐");
-        
 
 		$this->assign("agencylist", $agencylist);
 		$this->assign("agentlist", $agentlist);
 		$this->assign("citylist", $citylist);
         $this->assign("starlist", $starlist);
-        $this->assign("blist", $blist);
-        $this->assign("llist", $llist);
-        $this->assign("dlist", $dlist);
+        $this->assign("foodlist", $foodlist);
 		$this->display();
 	}
 	

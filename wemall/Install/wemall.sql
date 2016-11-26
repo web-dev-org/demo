@@ -156,3 +156,50 @@ CREATE TABLE IF NOT EXISTS `www_travelplan` (
   `agentid` int(5) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+--
+-- 表的结构 用餐管理`food`
+--
+
+CREATE TABLE IF NOT EXISTS `www_food` (
+  `id` int(5) NOT NULL AUTO_INCREMENT,
+  `name` varchar(50) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+--
+-- 表的结构 旅行计划之景点管理`travelview`
+--
+
+CREATE TABLE IF NOT EXISTS `www_travelview` (
+  `id` int(5) NOT NULL AUTO_INCREMENT,
+  `date` DATE NOT NULL,
+  `viewid` int(5) NOT NULL,
+  `travelid` int(5) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+--
+-- 表的结构 旅行计划之酒店管理`travelhotel`
+--
+
+CREATE TABLE IF NOT EXISTS `www_travelhotel` (
+  `id` int(5) NOT NULL AUTO_INCREMENT,
+  `date` DATE NOT NULL,
+  `hotelid` int(5) NOT NULL,
+  `travelid` int(5) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+--
+-- 表的结构 旅行计划之用餐管理`travelfood`
+--
+
+CREATE TABLE IF NOT EXISTS `www_travelfood` (
+  `id` int(5) NOT NULL AUTO_INCREMENT,
+  `date` DATE NOT NULL,
+  `foodid` int(5) NOT NULL,
+  `foodtype` int(5) NOT NULL,
+  `travelid` int(5) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
